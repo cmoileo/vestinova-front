@@ -75,6 +75,7 @@ class ApiService {
         "authorization": `${this.bearerToken}`,
       },
       body: JSON.stringify(data),
+      files: data.files,
     });
 
     if (!response.ok) {
@@ -89,6 +90,7 @@ class ApiService {
       const response = await fetch(`${this.baseUrl}/items?pagination=${pagination}`, {
         headers: {
           "authorization": `${this.bearerToken}`,
+          'Content-Type': 'application/json',
         },
       });
       return await response.json();

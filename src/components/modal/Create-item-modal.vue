@@ -15,8 +15,8 @@
             <div class="flex flex-col gap-4">
               <Label for="name">Name<span class="text-red-500">*</span></Label>
               <Input required type="text" name="name" placeholder="Item name" />
-              <Label for="description">Description</Label>
-              <Textarea name="description" placeholder="Write the description here" />
+              <Label for="description">Description<span class="text-red-500">*</span></Label>
+              <Textarea required name="description" placeholder="Write the description here" />
               <Label for="price">Price<span class="text-red-500">*</span></Label>
               <Input required type="number" name="price" placeholder="Price" />
               <Label for="categorie">Categories</Label>
@@ -97,12 +97,23 @@ const handleCreateItem = async (event: Event) => {
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
 
-  const images = formData.getAll('image');
-  formData.delete('image');
+  const imagesInput = form.querySelector('input[name="image"]') as HTMLInputElement;
+  const files = imagesInput.files;
+  let images
 
-  images.forEach((file, index) => {
-    formData.append(`image[${index}]`, file);
-  });
+  if (files) {
+    images = await Promise.all(
+      Array.from(files).map(file => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve((reader.result as string).split(",")[1]);
+          reader.onerror = () => reject(new Error("Error reading file"));
+          reader.readAsDataURL(file);
+        });
+      })
+    );
+  }
+
 
   const mergedCategories = props.categories.map((category) => {
     const selectedCategory = Object.entries(Object.fromEntries(formData.entries())).find(([key]) => key === category.name);
@@ -114,7 +125,7 @@ const handleCreateItem = async (event: Event) => {
     name: formData.get('name'),
     description: formData.get('description'),
     price: formData.get('price'),
-    categories: mergedCategories,
+    categoryIds: mergedCategories,
     images: images,
   };
 
