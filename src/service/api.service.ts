@@ -41,6 +41,38 @@ class ApiService {
 
     return response.json();
   }
+
+  public async getCategories(): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/items-categories`, {
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+    });
+    return await response.json();
+  }
+
+  public async createItem(data: {
+    name: string;
+    description: string;
+    price: number;
+    category: string;
+    files: File[];
+  }): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `${this.bearerToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create item');
+    }
+
+    return response.json();
+  }
 }
 
 const apiService = new ApiService();
