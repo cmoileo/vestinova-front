@@ -1,6 +1,6 @@
 <template>
   <Dialog>
-    <DialogTrigger>
+    <DialogTrigger as-child>
       <router-link to="/home">
         <li class="bg-primary w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition">
           <v-icon scale="1.5" color="white" name="px-plus" />
@@ -13,11 +13,11 @@
         <DialogDescription>
           <form class="mt-4" @submit="handleCreateItem">
             <div class="flex flex-col gap-4">
-              <Label for="name">Name</Label>
+              <Label for="name">Name<span class="text-red-500">*</span></Label>
               <Input required type="text" name="name" placeholder="Item name" />
               <Label for="description">Description</Label>
               <Textarea name="description" placeholder="Write the description here" />
-              <Label for="price">Price</Label>
+              <Label for="price">Price<span class="text-red-500">*</span></Label>
               <Input required type="number" name="price" placeholder="Price" />
               <Label for="categorie">Categories</Label>
               <div class="grid grid-cols-3 gap-4">
@@ -43,9 +43,14 @@
               <Label for="images">Images</Label>
               <Input type="file" name="image" multiple accept=".jpg,.jpeg,.png" />
             </div>
-            <Button
-              type="submit"
-              class="mx-auto mt-8 w-full" color="primary">Create</Button>
+            <DialogClose>
+              <Button
+                type="submit"
+                class="mx-auto mt-8 w-full" color="primary"
+              >
+                Create
+              </Button>
+            </DialogClose>
           </form>
         </DialogDescription>
       </DialogHeader>
@@ -55,7 +60,7 @@
 
 <script setup lang="ts">
 import {
-  Dialog,
+  Dialog, DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -78,6 +83,9 @@ import {
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import apiService from "@/service/api.service";
+import {ref} from "vue";
+
+const isDialogOpen = ref(false);
 
 
 const props = defineProps<{
@@ -89,9 +97,8 @@ const handleCreateItem = async (event: Event) => {
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
 
-  // Handle multiple files
   const images = formData.getAll('image');
-  formData.delete('image'); // Remove the existing single file entry
+  formData.delete('image');
 
   images.forEach((file, index) => {
     formData.append(`image[${index}]`, file);
@@ -113,6 +120,7 @@ const handleCreateItem = async (event: Event) => {
 
   try {
     await apiService.createItem(newItem);
+    isDialogOpen.value = false;
   } catch (error) {
     throw new Error(error);
   }

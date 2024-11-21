@@ -1,6 +1,16 @@
+import {cookieManager} from "@/service/cookie.service";
+
 class ApiService {
   private readonly baseUrl: string = 'http://localhost:3001/api';
   public bearerToken: string | null = null;
+
+  constructor() {
+    this.getToken();
+  }
+
+  private getToken(): string {
+    this.bearerToken = cookieManager.getCookie('token');
+  }
 
   public async register(data: {
     email: string;
@@ -74,9 +84,9 @@ class ApiService {
     return response.json();
   }
 
-  public async getItems(): Promise<Items[] | void> {
+  public async getItems(pagination: number): Promise<Items[] | void> {
     try {
-      const response = await fetch(`${this.baseUrl}/items`, {
+      const response = await fetch(`${this.baseUrl}/items?pagination=${pagination}`, {
         headers: {
           "authorization": `${this.bearerToken}`,
         },
