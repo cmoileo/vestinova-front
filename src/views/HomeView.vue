@@ -2,7 +2,6 @@
 import { RouterView } from 'vue-router'
 import {cookieManager} from "@/service/cookie.service";
 import router from "@/router";
-import {Button} from "@/components/ui/button";
 
 if (!cookieManager.getCookie('token')) {
   router.push('/login')
@@ -12,12 +11,12 @@ const baseIconStyle = "opacity-50 transition hover:opacity-100 cursor-pointer"
 </script>
 
 <template>
-  <div class="mx-16 h-screen">
+  <div class="md:mx-16 mx-8 h-screen py-4">
     <main class="h-[90%]">
       <RouterView />
     </main>
-    <footer class="w-fit mx-auto">
-      <ul class="flex gap-16 items-center">
+    <footer class="w-fit mx-auto md:px-12 md:py-4 px-8 py-2 rounded-full bg-white">
+      <ul class="flex md:gap-16 gap-8 items-center">
         <router-link to="/">
           <li :class="baseIconStyle">
             <v-icon scale="1.5" name="co-home" />

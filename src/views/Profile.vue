@@ -1,7 +1,7 @@
 <template>
   <div>
     <AutoForm
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-8 md:w-2/3 md:mx-auto"
       :form="form"
       :schema="schema"
       :field-config="{
@@ -36,7 +36,6 @@ import {Button} from "@/components/ui/button";
 const schema = z.object({
   firstName: z.string({required_error: 'First Name is required'}),
   lastName: z.string({required_error: 'Last Name is required'}),
-  email: z.string({required_error: 'Email is required'}).email(),
   password: z.string({
     required_error: 'Password is required.',
   })
