@@ -13,6 +13,7 @@ onMounted(async () => {
   if (!cookieManager.getCookie("token")) {
     await router.push("/login");
   } else {
+    await router.push("/home")
     await apiResponseStore.fetchData();
   }
 });

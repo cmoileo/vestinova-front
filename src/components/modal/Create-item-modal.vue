@@ -1,9 +1,11 @@
 <template>
   <Dialog>
     <DialogTrigger>
-      <li class="bg-primary w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition">
-        <v-icon scale="1.5" color="white" name="px-plus" />
-      </li>
+      <router-link to="/home">
+        <li class="bg-primary w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition">
+          <v-icon scale="1.5" color="white" name="px-plus" />
+        </li>
+      </router-link>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
@@ -110,8 +112,7 @@ const handleCreateItem = async (event: Event) => {
   };
 
   try {
-    const response = await apiService.createItem(newItem);
-    console.log(response);
+    await apiService.createItem(newItem);
   } catch (error) {
     throw new Error(error);
   }
