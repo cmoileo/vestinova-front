@@ -1,4 +1,5 @@
 import {cookieManager} from "@/service/cookie.service";
+import type {ItemType} from "@/type/Item.type";
 
 class ApiService {
   private readonly baseUrl: string = 'http://localhost:3001/api';
@@ -95,6 +96,7 @@ class ApiService {
       });
       return await response.json();
     } catch (error) {
+      console.error(error);
       throw new Error('Failed to get items');
     }
   }
@@ -104,6 +106,15 @@ class ApiService {
       headers: {
         "authorization": `${this.bearerToken
         }`,
+      },
+    });
+    return await response.json();
+  }
+
+  public async searchItems(query: string): Promise<ItemType[]> {
+    const response = await fetch(`${this.baseUrl}/items/search${query}`, {
+      headers: {
+        "authorization": `${this.bearerToken}`,
       },
     });
     return await response.json();

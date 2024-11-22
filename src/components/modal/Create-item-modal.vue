@@ -9,7 +9,7 @@
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Create new item</DialogTitle>
+        <DialogTitle class="border-b pb-2 text-3xl font-semibold tracking-tight transition-colors">Create new item</DialogTitle>
         <DialogDescription>
           <form class="mt-4" @submit="handleCreateItem">
             <div class="flex flex-col gap-4">

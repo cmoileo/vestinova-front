@@ -6,6 +6,11 @@
         <p>{{ props.item.price }}€</p>
       </div>
       <p>{{ props.item.description }}</p>
+      <div class="flex flex-wrap mt-8 gap-2">
+        <Badge v-for="category in props.item?.categories" :key="category.id">
+          {{ category.name }}
+        </Badge>
+      </div>
     </div>
   </router-link>
 </template>
@@ -13,6 +18,7 @@
 <script setup lang="ts">
 import defineProps from 'vue'
 import type {ItemType} from "@/type/Item.type";
+import {Badge} from "@/components/ui/badge";
 
 const props = defineProps<{
   item: ItemType

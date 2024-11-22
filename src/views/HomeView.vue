@@ -18,8 +18,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="md:mx-16 mx-8 h-screen py-4">
-    <main class="h-[90%] overflow-y-auto no-scrollbar pb-8 px-4">
+  <div class="md:mx-16 mx-8 h-screen">
+    <main class="h-[90%] py-4 pb-8 px-4 flex flex-col gap-8">
       <RouterView />
     </main>
     <Footer />

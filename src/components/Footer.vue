@@ -1,7 +1,7 @@
 <template>
   <footer class="w-fit mx-auto md:px-12 md:py-4 px-8 py-2 rounded-full bg-white z-10">
     <ul class="flex md:gap-16 gap-8 items-center">
-      <router-link to="/">
+      <router-link to="/home">
         <li :class="baseIconStyle">
           <v-icon scale="1.5" name="co-home" />
         </li>
