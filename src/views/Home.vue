@@ -7,7 +7,13 @@ import SearchBar from "@/components/modal/Search-bar.vue";
 const items = ref([]);
 
 onMounted(async () => {
-  items.value = await apiService.getItems(100);
+  const searchQuery = window.location.search;
+  if (searchQuery) {
+    items.value = await apiService.searchItems(searchQuery);
+    return;
+  } else {
+    items.value = await apiService.getItems(100);
+  }
 });
 
 const updateItems = (newItems) => {

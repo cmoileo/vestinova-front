@@ -12,6 +12,7 @@ const item = ref<ItemType | null>(null);
 
 onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
+  console.log(item.value);
 });
 </script>
 
@@ -26,6 +27,12 @@ onMounted(async () => {
       <Badge v-for="category in item?.categories" :key="category.id">
         {{ category.name }}
       </Badge>
+    </div>
+    <div class="mt-4 flex gap-1">
+      <p>Added by :</p>
+      <div>
+        <p class="font-semibold">{{ item?.user.firstname }} {{ item?.user.lastname }}</p>
+      </div>
     </div>
   </div>
 </template>

@@ -81,8 +81,6 @@ onMounted(async () => {
       const [key, value] = category.split("=");
       return { key, value };
     });
-
-  console.log(selectedCategoriesRef.value);
 });
 
 const handleSearch = async (e: Event) => {
@@ -108,8 +106,6 @@ const handleSearch = async (e: Event) => {
       const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
       return { key: formattedKey, value };
     });
-
-  console.log(selectedCategoriesRef.value);
 
   const searchResults = await apiService.searchItems(searchQuery);
   emit('update:items', searchResults);
