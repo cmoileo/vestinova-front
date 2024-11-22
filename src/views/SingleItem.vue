@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import apiService from '@/service/api.service';
 import type { ItemType } from '@/type/Item.type';
 import {Button} from "@/components/ui/button";
+import {Badge} from "@/components/ui/badge";
 
 const route = useRoute();
 const itemId = ref<string>(route.params.id as string);
@@ -11,7 +12,6 @@ const item = ref<ItemType | null>(null);
 
 onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
-  console.log(item);
 });
 </script>
 
@@ -22,5 +22,10 @@ onMounted(async () => {
     <p>{{ item?.description }}</p>
     <p class="text-xl font-semibold tracking-tight transition-colors">{{ item?.price }}€</p>
     <Button class="mt-12">Buy this item</Button>
+    <div class="flex flex-wrap mt-8 gap-2">
+      <Badge v-for="category in item?.categories" :key="category.id">
+        {{ category.name }}
+      </Badge>
+    </div>
   </div>
 </template>

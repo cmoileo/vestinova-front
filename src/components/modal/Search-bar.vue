@@ -11,7 +11,7 @@
           <Input type="text" name="search" placeholder="Search item" />
           <div class="grid grid-cols-3 gap-4">
             <div class="w-full" v-for="category in categoriesRef" :key="category.id">
-              <Select :name="category.name">
+              <Select :model-value="selectedCategoriesRef[category.name]" :name="category.name">
                 <SelectTrigger>
                   <SelectValue :placeholder="`Select ${category.name}`" />
                 </SelectTrigger>
@@ -36,8 +36,12 @@
       </DialogContent>
     </Dialog>
     <p class="text-lg font-semibold">Search item</p>
+    <div class="cursor-pointer" @click="handleEraseFilters">
+      <v-icon scale="2" name="co-delete" />
+    </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import {Button} from "@/components/ui/button";
 import {Dialog, DialogClose, DialogContent, DialogTrigger} from "@/components/ui/dialog";
@@ -51,23 +55,34 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useCategoryStore } from "@/stores/category";
-import {defineProps, onMounted, ref} from "vue";
+import {defineProps, onMounted, ref, defineEmits} from "vue";
 import type {CategoryType} from "@/type/Category.type";
 import {Input} from "@/components/ui/input";
 import type {ItemType} from "@/type/Item.type";
 import apiService from "@/service/api.service";
 
 const categoriesRef = ref<CategoryType[]>([]);
-
+const selectedCategoriesRef = ref<string[]>([]);
 const apiResponseStore = useCategoryStore();
 
 const props = defineProps<{
   items: ItemType[]
 }>();
 
+const emit = defineEmits(['update:items']);
+
 onMounted(async () => {
   await apiResponseStore.fetchData();
   categoriesRef.value = apiResponseStore.data;
+  selectedCategoriesRef.value = window.location.search
+    .split("&")
+    .filter((category) => category.includes("="))
+    .map((category) => {
+      const [key, value] = category.split("=");
+      return { key, value };
+    });
+
+  console.log(selectedCategoriesRef.value);
 });
 
 const handleSearch = async (e: Event) => {
@@ -77,15 +92,33 @@ const handleSearch = async (e: Event) => {
 
   const mergedCategories = categoriesRef?.value.map((category) => {
     const selectedCategory = Object.entries(Object.fromEntries(formData.entries())).find(([key]) => key === category.name);
-    console.log(selectedCategory)
     if (!selectedCategory) return null;
-    return `${selectedCategory[0].toLowerCase()}=${selectedCategory[1].toLowerCase()}`;
+    return `${selectedCategory[0].toLowerCase()}=${selectedCategory[1]}`;
   }).filter((category) => category !== null).join("&");
 
   const searchQuery = `?search=${itemName}${mergedCategories ? `&${mergedCategories}` : ""}`;
 
-  console.log(searchQuery)
+  window.history.pushState({}, "", searchQuery);
 
-  console.log(await apiService.searchItems(searchQuery))
+  selectedCategoriesRef.value = window.location.search
+    .split("&")
+    .filter((category) => category.includes("="))
+    .map((category) => {
+      const [key, value] = category.split("=");
+      const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+      return { key: formattedKey, value };
+    });
+
+  console.log(selectedCategoriesRef.value);
+
+  const searchResults = await apiService.searchItems(searchQuery);
+  emit('update:items', searchResults);
+}
+
+const handleEraseFilters = async () => {
+  window.history.pushState({}, "", "/home");
+  selectedCategoriesRef.value = [];
+  const searchResults = await apiService.getItems(100);
+  emit('update:items', searchResults);
 }
 </script>

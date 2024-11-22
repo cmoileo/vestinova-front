@@ -112,7 +112,7 @@ class ApiService {
   }
 
   public async searchItems(query: string): Promise<ItemType[]> {
-    const response = await fetch(`${this.baseUrl}/items/search${query}`, {
+    const response = await fetch(`${this.baseUrl}/items-search${query}`, {
       headers: {
         "authorization": `${this.bearerToken}`,
       },

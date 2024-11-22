@@ -1,10 +1,3 @@
-<template>
-  <SearchBar :items="items" />
-  <div class="h-[90%] py-4 overflow-y-auto no-scrollbar pb-8 px-4">
-    <ItemList :items="items" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import apiService from "@/service/api.service";
@@ -16,4 +9,15 @@ const items = ref([]);
 onMounted(async () => {
   items.value = await apiService.getItems(100);
 });
+
+const updateItems = (newItems) => {
+  items.value = newItems;
+};
 </script>
+
+<template>
+  <SearchBar :items="items" @update:items="updateItems" />
+  <div class="h-[90%] py-4 overflow-y-auto no-scrollbar pb-8 px-4">
+    <ItemList :items="items" />
+  </div>
+</template>

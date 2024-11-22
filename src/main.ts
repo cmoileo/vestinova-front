@@ -7,9 +7,9 @@ import App from './App.vue'
 import router from './router'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import {CoHome, CoSearch, CoUser, FaFlag, PxPlus, RiZhihuFill} from "oh-vue-icons/icons";
+import {CoDelete, CoHome, CoSearch, CoUser, FaFlag, PxPlus, RiZhihuFill} from "oh-vue-icons/icons";
 
-addIcons(FaFlag, RiZhihuFill, CoHome, CoUser, PxPlus, CoSearch);
+addIcons(FaFlag, RiZhihuFill, CoHome, CoUser, PxPlus, CoSearch, CoDelete);
 
 const app = createApp(App)
 
