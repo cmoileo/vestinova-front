@@ -30,7 +30,7 @@
             </div>
           </div>
           <DialogClose>
-            <Button type="submit">Search items</Button>
+            <Button class="mt-4 w-full" type="submit">Search items</Button>
           </DialogClose>
         </form>
       </DialogContent>
