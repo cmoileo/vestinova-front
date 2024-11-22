@@ -1,5 +1,4 @@
 <template>
-  <h1>TEST</h1>
   <ItemList :items="items" />
 </template>
 
@@ -11,6 +10,6 @@ import ItemList from "@/components/lists/ItemList.vue";
 const items = ref([]);
 
 onMounted(async () => {
-  items.value = await apiService.getItems(10);
+  items.value = await apiService.getItems(30);
 });
 </script>

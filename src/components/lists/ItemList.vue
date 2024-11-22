@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div v-for="item in props.items" :key="item.id">
-      <ItemCard :item="props.items" />
-    </div>
+  <div class="grid grid-cols-3 gap-8">
+    <ItemCard v-for="item in props.items" :key="item.id" :item="item" />
   </div>
 </template>
 
@@ -10,7 +8,6 @@
 import { defineProps } from 'vue';
 import type {ItemType} from "@/type/Item.type";
 import ItemCard from "@/components/cards/ItemCard.vue";
-import {onMounted} from "vue";
 
 const props = defineProps<{
   items: ItemType[]

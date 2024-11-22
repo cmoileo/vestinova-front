@@ -80,3 +80,7 @@
 body {
   background: antiquewhite;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

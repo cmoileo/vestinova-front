@@ -98,6 +98,16 @@ class ApiService {
       throw new Error('Failed to get items');
     }
   }
+
+  public async getItem(id: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/items/${id}`, {
+      headers: {
+        "authorization": `${this.bearerToken
+        }`,
+      },
+    });
+    return await response.json();
+  }
 }
 
 const apiService = new ApiService();

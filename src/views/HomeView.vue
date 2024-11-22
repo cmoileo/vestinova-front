@@ -21,10 +21,10 @@ onMounted(async () => {
 
 <template>
   <div class="md:mx-16 mx-8 h-screen py-4">
-    <main class="h-[90%]">
+    <main class="h-[90%] overflow-y-auto no-scrollbar pb-8 px-4">
       <RouterView />
     </main>
-    <footer class="w-fit mx-auto md:px-12 md:py-4 px-8 py-2 rounded-full bg-white">
+    <footer class="w-fit mx-auto md:px-12 md:py-4 px-8 py-2 rounded-full bg-white z-10">
       <ul class="flex md:gap-16 gap-8 items-center">
         <router-link to="/">
           <li :class="baseIconStyle">
