@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <hr class="header-separator" />
+    <hr class="accent" />
 
     <nav class="nav-links">
       <a href="/">Mode Femme</a>

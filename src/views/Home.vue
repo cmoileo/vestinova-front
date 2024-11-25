@@ -5,14 +5,14 @@ import manCategoryImage from '@/assets/images/man-category.jpg';
 import womanCategoryImage from '@/assets/images/woman-category.jpg';
 import kidsCategoryImage from '@/assets/images/kids-category.jpg';
 import bannerImage from '@/assets/images/banner-3.jpg';
-import bannerImage2 from '@/assets/images/banner-2.jpg';
+import bannerImage2 from '@/assets/images/banner-4.jpg';
 
 
 const items = ref([]);
 const categories = ref([
-  { id: 1, name: 'Man', image: manCategoryImage },
-  { id: 2, name: 'Woman', image: womanCategoryImage },
-  { id: 3, name: 'Kids', image: kidsCategoryImage },
+  { id: 1, name: 'Homme', image: manCategoryImage },
+  { id: 2, name: 'Femme', image: womanCategoryImage },
+  { id: 3, name: 'Enfant', image: kidsCategoryImage },
 ]);
 
 onMounted(async () => {
@@ -31,7 +31,7 @@ onMounted(async () => {
     <section class="hero-section relative w-full h-[80vh] bg-cover bg-center flex items-center justify-center text-white"
     :style="`background-image: url(${bannerImage})`">
       <div class="hero-content bg-black bg-opacity-50 p-8 rounded-md text-center">
-        <h1 class="text-5xl font-bold mb-4">TOLUS SPRING COLLECTION</h1>
+        <h1 class="text-5xl font-bold mb-4">Vestinova SPRING COLLECTION</h1>
         <p class="text-xl mb-6">Découvrez notre meilleure collection de printemps. Proposant nos meilleurs produits dans une collection unique.</p>
         <button class="hero-button bg-white text-black py-3 px-6 rounded-md hover:bg-gray-300 transition-all">
           Acheter Maintenant
@@ -56,8 +56,8 @@ onMounted(async () => {
     <section class="wear-to-wedding relative w-full h-[50vh] bg-cover bg-center flex items-center justify-center text-white"
             :style="`background-image: url(${bannerImage2})`">
       <div class="wear-content bg-black bg-opacity-50 p-8 rounded-md text-center">
-        <h2 class="wear-title text-4xl font-bold mb-4">POUR UN MARIAGE</h2>
-        <p class="text-xl mb-6">Une symphonie de designs exquis taillés pour vos moments inoubliables.</p>
+        <h2 class="wear-title text-4xl font-bold mb-4">Vestinova</h2>
+        <p class="text-xl mb-6">L'application de seconde main pour acheter et revendre des affaires pour toute la famille. <br> Jusqu'à 80% moins chers qu'en magasin.</p>
         <button class="wear-button bg-white text-black py-3 px-6 rounded-md hover:bg-gray-300 transition-all">
           Voir Détails
         </button>
