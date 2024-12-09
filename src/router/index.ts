@@ -36,13 +36,13 @@ const router = createRouter({
           path: '/cart',
           name: 'cart',
           component: Cart
-        }
+        },
+        {
+          path: '/user/:userId/public',
+          name: 'UserPublicProfile',
+          component: UserPublicProfile,
+        },
       ]
-    },
-    {
-      path: '/user/:userId/public',
-      name: 'UserPublicProfile',
-      component: UserPublicProfile,
     },
     {
       path: '/onboarding',

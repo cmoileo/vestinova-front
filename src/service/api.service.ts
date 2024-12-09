@@ -203,7 +203,15 @@ class ApiService {
         "authorization": `${this.bearerToken}`,
       },
     })
-    return await response.json();
+  }
+
+  public async removeItemFromCart(itemId: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
+      method: 'PATCH',
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+    })
   }
 }
 
