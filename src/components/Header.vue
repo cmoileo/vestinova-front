@@ -33,7 +33,7 @@
           <v-icon scale="1.5" name="co-cart" class="icon-cart" />
         </router-link>
 
-        <button @click="openCreateItemModal" class="sell-button">Vendre un article</button>
+        <create-item-modal :categories="apiResponseStore.data" />
       </div>
     </div>
 
@@ -48,8 +48,6 @@
       <a href="/">Marques</a>
       <a href="/">Notre Sélection</a>
     </nav>
-
-    <create-item-modal :categories="apiResponseStore.data" v-if="showCreateItemModal" @close="closeCreateItemModal" />
   </header>
 </template>
 
@@ -59,20 +57,11 @@ import CreateItemModal from "@/components/modal/Create-item-modal.vue";
 import { useCategoryStore } from "@/stores/category";
 
 const showSearch = ref(false);
-const showCreateItemModal = ref(false);
 
 const apiResponseStore = useCategoryStore();
 
 const toggleSearchBar = () => {
   showSearch.value = !showSearch.value;
-};
-
-const openCreateItemModal = () => {
-  showCreateItemModal.value = true;
-};
-
-const closeCreateItemModal = () => {
-  showCreateItemModal.value = false;
 };
 
 onMounted(() => {

@@ -2,12 +2,10 @@
   <Dialog>
     <DialogTrigger as-child>
       <router-link to="/home">
-        <li class="bg-primary w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition">
-          <v-icon scale="1.5" color="white" name="px-plus" />
-        </li>
+        <button class="sell-button">Vendre un article</button>
       </router-link>
     </DialogTrigger>
-    <DialogContent>
+    <DialogContent class="bg-white">
       <DialogHeader>
         <DialogTitle class="border-b pb-2 text-3xl font-semibold tracking-tight transition-colors">Create new item</DialogTitle>
         <DialogDescription>
@@ -26,14 +24,14 @@
                     <SelectTrigger>
                       <SelectValue :placeholder="`Select ${category.name}`" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent class="bg-white">
                       <SelectGroup>
                         <SelectLabel>{{ category.name }}</SelectLabel>
                         <div
                          v-for="child in category.children"
                          key="child.id"
                         >
-                          <SelectItem :value="child.id.toString()">{{ child.name }}</SelectItem>
+                          <SelectItem class="border cursor-pointer hover:bg-grey transition" :value="child.id.toString()">{{ child.name }}</SelectItem>
                         </div>
                       </SelectGroup>
                     </SelectContent>
@@ -91,6 +89,8 @@ const isDialogOpen = ref(false);
 const props = defineProps<{
   categories: CategoryType[]
 }>();
+
+console.log(props.categories);
 
 const handleCreateItem = async (event: Event) => {
   event.preventDefault();
