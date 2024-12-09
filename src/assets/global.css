@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: hsl(0, 0%, 100%);
+    --background: hsl(40, 15%, 84%);
     --foreground: hsl(0, 0%, 10%);
 
     --muted: hsl(0, 0%, 95%);
@@ -79,7 +79,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background);
   }
 }
 

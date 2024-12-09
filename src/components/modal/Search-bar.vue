@@ -1,5 +1,5 @@
 <template>
-  <div class="fit mx-auto bg-white rounded-full flex gap-4 items-center">
+  <div class="fit mx-auto  rounded-full flex gap-4 items-center">
     <Dialog>
       <DialogTrigger>
         <button class="search-button">

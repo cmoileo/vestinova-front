@@ -5,6 +5,7 @@ import apiService from "@/service/api.service";
 export const useItemsStore = defineStore("itemsStore", {
   state: () => ({
     data: <ItemType>[] | null,
+    page: 1,
     loading: false,
     error: null as string | null,
   }),
@@ -13,7 +14,7 @@ export const useItemsStore = defineStore("itemsStore", {
       this.loading = true;
       this.error = null;
       try {
-        const items = await apiService.getItems(100);
+        const items = await apiService.getItems(this.page);
         if (items) {
           this.data = items;
         }
