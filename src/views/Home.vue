@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import apiService from "@/service/api.service";
 import manCategoryImage from '@/assets/images/man-category.jpg';
 import womanCategoryImage from '@/assets/images/woman-category.jpg';
 import kidsCategoryImage from '@/assets/images/kids-category.jpg';
 import bannerImage from '@/assets/images/banner-3.jpg';
 import bannerImage2 from '@/assets/images/banner-4.jpg';
+import { useItemsStore} from "@/stores/item";
 
+const itemsStore = useItemsStore();
 
-const items = ref([]);
 const categories = ref([
   { id: 1, name: 'Homme', image: manCategoryImage },
   { id: 2, name: 'Femme', image: womanCategoryImage },
@@ -18,10 +18,10 @@ const categories = ref([
 onMounted(async () => {
   const searchQuery = window.location.search;
   if (searchQuery) {
-    items.value = await apiService.searchItems(searchQuery);
+    await itemsStore.searchItems(searchQuery);
     return;
   } else {
-    items.value = await apiService.getItems(100);
+    await itemsStore.fetchData();
   }
 });
 </script>
@@ -43,7 +43,7 @@ onMounted(async () => {
       <h2 class="text-4xl font-bold mb-8">NOUVELLE COLLECTION</h2>
       <p class="text-lg text-gray-600 mb-12">Notre dernière collection, où les styles classiques et contemporains se rencontrent en parfaite harmonie.</p>
       <div class="collection-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="item in items" :key="item.id" class="collection-item bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2">
+        <div v-for="item in itemsStore.data" :key="item.id" class="collection-item bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2">
           <img :src="item.image" :alt="item.name" class="collection-image w-full h-64 object-cover rounded-md mb-4"/>
           <div class="collection-info">
             <h3 class="collection-title text-2xl font-bold">{{ item.name }}</h3>

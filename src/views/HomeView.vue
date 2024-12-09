@@ -3,7 +3,6 @@ import { onMounted } from "vue";
 import { cookieManager } from "@/service/cookie.service";
 import router from "@/router";
 import { useCategoryStore } from "@/stores/category";
-import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 
 const apiResponseStore = useCategoryStore();

@@ -13,7 +13,7 @@
 
       <div class="actions-section">
         <div class="search-section">
-          <search-bar />
+          <search-bar @update:items="updateItems" />
         </div>
 
         <router-link to="/profile">
@@ -51,12 +51,16 @@ import { ref, onMounted } from "vue";
 import CreateItemModal from "@/components/modal/Create-item-modal.vue";
 import { useCategoryStore } from "@/stores/category";
 import SearchBar from "@/components/modal/Search-bar.vue";
-
-const showSearch = ref(false);
+import { useItemsStore } from "@/stores/item";
 
 const apiResponseStore = useCategoryStore();
+const itemsStore = useItemsStore();
 
 onMounted(() => {
   apiResponseStore.fetchData();
 });
+
+const updateItems = (newItems) => {
+  itemsStore.data = newItems;
+};
 </script>
