@@ -1,12 +1,12 @@
 <template>
-  <div class="fit mx-auto bg-white p-4 rounded-full px-12 flex gap-4 items-center">
+  <div class="fit mx-auto bg-white rounded-full flex gap-4 items-center">
     <Dialog>
       <DialogTrigger>
-        <Button class="w-fit h-fit p-2">
-          <v-icon scale="2" name="co-search" />
-        </Button>
+        <button class="search-button">
+          <v-icon scale="1.5" name="co-search" class="icon-search" />
+        </button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent class="bg-white">
         <form @submit="handleSearch" class="flex flex-col gap-4">
           <Input type="text" name="search" placeholder="Search item" />
           <div class="grid grid-cols-3 gap-4">
@@ -15,7 +15,7 @@
                 <SelectTrigger>
                   <SelectValue :placeholder="`Select ${category.name}`" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent class="bg-white">
                   <SelectGroup>
                     <SelectLabel>{{ category.name }}</SelectLabel>
                     <div
@@ -30,15 +30,12 @@
             </div>
           </div>
           <DialogClose>
-            <Button class="mt-4 w-full" type="submit">Search items</Button>
+            <Button class="mt-4 w-full sell-button" @click="handleEraseFilters">Erase filters</Button>
+            <Button class="mt-4 w-full sell-button" type="submit">Search items</Button>
           </DialogClose>
         </form>
       </DialogContent>
     </Dialog>
-    <p class="text-lg font-semibold">Search item</p>
-    <div class="cursor-pointer" @click="handleEraseFilters">
-      <v-icon scale="2" name="co-delete" />
-    </div>
   </div>
 </template>
 
@@ -64,10 +61,6 @@ import apiService from "@/service/api.service";
 const categoriesRef = ref<CategoryType[]>([]);
 const selectedCategoriesRef = ref<string[]>([]);
 const apiResponseStore = useCategoryStore();
-
-const props = defineProps<{
-  items: ItemType[]
-}>();
 
 const emit = defineEmits(['update:items']);
 
@@ -108,6 +101,7 @@ const handleSearch = async (e: Event) => {
     });
 
   const searchResults = await apiService.searchItems(searchQuery);
+  console.log(searchResults);
   emit('update:items', searchResults);
 }
 

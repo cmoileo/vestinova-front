@@ -13,12 +13,7 @@
 
       <div class="actions-section">
         <div class="search-section">
-          <button @click="toggleSearchBar" class="search-button">
-            <v-icon scale="1.5" name="co-search" class="icon-search" />
-          </button>
-          <transition name="fade">
-            <input v-if="showSearch" type="text" class="search-bar" placeholder="Rechercher des articles..." />
-          </transition>
+          <search-bar />
         </div>
 
         <router-link to="/profile">
@@ -55,14 +50,11 @@
 import { ref, onMounted } from "vue";
 import CreateItemModal from "@/components/modal/Create-item-modal.vue";
 import { useCategoryStore } from "@/stores/category";
+import SearchBar from "@/components/modal/Search-bar.vue";
 
 const showSearch = ref(false);
 
 const apiResponseStore = useCategoryStore();
-
-const toggleSearchBar = () => {
-  showSearch.value = !showSearch.value;
-};
 
 onMounted(() => {
   apiResponseStore.fetchData();
