@@ -7,6 +7,8 @@ import bannerImage from '@/assets/images/banner-3.jpg';
 import bannerImage2 from '@/assets/images/banner-4.jpg';
 import { useItemsStore} from "@/stores/item";
 import ItemList from "@/components/lists/ItemList.vue";
+import { Skeleton} from "@/components/ui/skeleton";
+
 
 const itemsStore = useItemsStore();
 
@@ -43,7 +45,14 @@ onMounted(async () => {
     <section class="new-collection py-16 text-center">
       <h2 class="text-4xl font-bold mb-8">NOUVELLE COLLECTION</h2>
       <p class="text-lg text-gray-600 mb-12">Notre dernière collection, où les styles classiques et contemporains se rencontrent en parfaite harmonie.</p>
-      <Item-list :items="itemsStore.data" />
+      <div v-if="itemsStore.loading" class="flex gap-12">
+        <Skeleton class="w-[100%] h-80 rounded-xl " style="background: grey" />
+        <Skeleton class="w-[100%] h-80 rounded-xl " style="background: grey" />
+        <Skeleton class="w-[100%] h-80 rounded-xl " style="background: grey" />
+      </div>
+     <div v-if="!itemsStore.loading">
+       <Item-list :items="itemsStore.data" />
+     </div>
     </section>
 
     <section class="wear-to-wedding relative w-full h-[50vh] bg-cover bg-center flex items-center justify-center text-white"
