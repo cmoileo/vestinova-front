@@ -7,4 +7,5 @@ export type ItemType = {
   price: number;
   categories: CategoryType[];
   files: File[];
+  imageUrl?: string;
 }

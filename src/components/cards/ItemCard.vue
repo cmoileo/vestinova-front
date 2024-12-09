@@ -6,6 +6,7 @@
         <p>{{ props.item.price }}€</p>
       </div>
       <p>{{ props.item.description }}</p>
+      <img v-if="props.item.imageUrl" class="w-full h-48 rounded-2xl object-cover" :src="props.item.imageUrl"  alt=""/>
       <div class="flex flex-wrap mt-8 gap-2">
         <Badge v-for="category in props.item?.categories" :key="category.id">
           {{ category.name }}

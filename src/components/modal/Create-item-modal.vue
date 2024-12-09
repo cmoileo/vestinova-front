@@ -38,7 +38,7 @@
                   </Select>
                 </div>
               </div>
-              <Label for="images">Images</Label>
+              <Label for="image">Image</Label>
               <Input type="file" name="image" multiple accept=".jpg,.jpeg,.png" />
             </div>
             <DialogClose>
@@ -90,30 +90,10 @@ const props = defineProps<{
   categories: CategoryType[]
 }>();
 
-console.log(props.categories);
-
 const handleCreateItem = async (event: Event) => {
   event.preventDefault();
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
-
-  const imagesInput = form.querySelector('input[name="image"]') as HTMLInputElement;
-  const files = imagesInput.files;
-  let images
-
-  if (files) {
-    images = await Promise.all(
-      Array.from(files).map(file => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve((reader.result as string).split(",")[1]);
-          reader.onerror = () => reject(new Error("Error reading file"));
-          reader.readAsDataURL(file);
-        });
-      })
-    );
-  }
-
 
   const mergedCategories = props.categories.map((category) => {
     const selectedCategory = Object.entries(Object.fromEntries(formData.entries())).find(([key]) => key === category.name);
@@ -121,18 +101,13 @@ const handleCreateItem = async (event: Event) => {
     return Number(selectedCategory[1]);
   }).filter((category) => category !== null);
 
-  const newItem = {
-    name: formData.get('name'),
-    description: formData.get('description'),
-    price: formData.get('price'),
-    categoryIds: mergedCategories,
-    images: images,
-  };
+  formData.append("categoryIds", mergedCategories);
 
   try {
-    await apiService.createItem(newItem);
+    await apiService.createItem(formData);
     isDialogOpen.value = false;
   } catch (error) {
+    console.log(error)
     throw new Error(error);
   }
 };

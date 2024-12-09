@@ -12,7 +12,6 @@ const item = ref<ItemType | null>(null);
 
 onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
-  console.log(item.value);
 });
 </script>
 
@@ -28,6 +27,7 @@ onMounted(async () => {
         {{ category.name }}
       </Badge>
     </div>
+    <img v-if="item?.imageUrl" class="w-full h-96 rounded-2xl object-cover" :src="item.imageUrl"  alt=""/>
     <div class="mt-4 flex gap-1">
       <p>Added by :</p>
       <div>

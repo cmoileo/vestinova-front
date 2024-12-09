@@ -72,11 +72,9 @@ class ApiService {
     const response = await fetch(`${this.baseUrl}/items`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         "authorization": `${this.bearerToken}`,
       },
-      body: JSON.stringify(data),
-      files: data.files,
+      body: data,
     });
 
     if (!response.ok) {
