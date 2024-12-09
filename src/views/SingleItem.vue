@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import apiService from '@/service/api.service';
 import type { ItemType } from '@/type/Item.type';
@@ -7,8 +7,14 @@ import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 
 const route = useRoute();
+const router = useRouter();
 const itemId = ref<string>(route.params.id as string);
 const item = ref<ItemType | null>(null);
+
+const goToUserProfile = (userId: string) => {
+  console.log("Redirecting to public profile of user:", userId);
+  router.push(`/user/${userId}/public`);
+};
 
 onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
@@ -32,6 +38,13 @@ onMounted(async () => {
       <p>Added by :</p>
       <div>
         <p class="font-semibold">{{ item?.user.firstname }} {{ item?.user.lastname }}</p>
+        <Button
+          v-if="item?.user.id"
+          class="mt-2"
+          @click="goToUserProfile(item.user.id)"
+        >
+          View Public Profile
+        </Button>
       </div>
     </div>
   </div>

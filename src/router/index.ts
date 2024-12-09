@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Profile from "@/views/Profile.vue";
 import Home from "@/views/Home.vue";
 import SingleItem from "@/views/SingleItem.vue";
+import UserProfile from '@/views/UserProfile.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
           component: SingleItem
         }
       ]
+    },
+    {
+      path: '/user/:userId/public',
+      name: 'UserPublicProfile',
+      component: UserProfile,
     },
     {
       path: '/onboarding',

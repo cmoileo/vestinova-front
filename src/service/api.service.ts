@@ -159,6 +159,26 @@ class ApiService {
     return await response.json();
   }
 
+  public async getUserPublicProfile(userId: string): Promise<any> {
+    console.log(`Fetching public profile for user: ${userId}`);
+    const response = await fetch(`${this.baseUrl}/user/${userId}/public`, {
+      method: "GET",
+      headers: {
+        Authorization: `${this.bearerToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      console.error("Erreur API :", errorMessage);
+      throw new Error("Failed to fetch user public profile");
+    }
+  
+    return await response.json();
+  }
+  
+
   public async getItemsCount(): Promise<number> {
     const response = await fetch(`${this.baseUrl}/items/count`, {
       method: 'GET',
