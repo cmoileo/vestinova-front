@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-[300px]">
     <ItemCard v-for="item in props.items" :key="item.id" :item="item" />
     <p v-if="props.items.length === 0">No items found.</p>
   </div>

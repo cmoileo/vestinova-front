@@ -23,7 +23,7 @@ onMounted(async () => {
 <template>
   <Header />
   <div class="md:mx-16 mx-8 h-screen">
-    <main class="h-[90%] py-4 pb-8 px-4 flex flex-col gap-8">
+    <main class="py-4 pb-8 px-4 flex flex-col gap-8">
       <RouterView />
     </main>
     <!-- <Footer /> -->
