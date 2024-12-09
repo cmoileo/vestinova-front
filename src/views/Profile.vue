@@ -8,15 +8,6 @@
       <p><strong>Nom :</strong> {{ userProfile.lastname }}</p>
       <p><strong>Email :</strong> {{ userProfile.email }}</p>
       <img v-if="userProfile.avatar" :src="userProfile.avatar" alt="Avatar" />
-      <div v-if="userProfile.items && userProfile.items.length">
-        <h2>Articles :</h2>
-        <ul>
-          <li v-for="item in userProfile.items" :key="item.id">{{ item.name }}</li>
-        </ul>
-      </div>
-      <div v-else>
-        <p>Aucun article associé.</p>
-      </div>
     </div>
   </div>
 </template>

@@ -43,7 +43,7 @@ onMounted(async () => {
           class="mt-2"
           @click="goToUserProfile(item.user.id)"
         >
-          View Public Profile
+          Visiter
         </Button>
       </div>
     </div>

@@ -13,7 +13,7 @@ class ApiService {
 
   private getToken(): string | null {
     this.bearerToken = cookieManager.getCookie("token");
-    console.log("Token récupéré :", this.bearerToken);
+    // console.log("Token récupéré :", this.bearerToken);
     if (!this.bearerToken) {
       throw new Error("Aucun token trouvé dans les cookies");
     }
@@ -132,7 +132,7 @@ class ApiService {
     }
     try {
       const decodedToken: any = jwtDecode(this.bearerToken);
-      console.log("Token décodé :", decodedToken);
+      // console.log("Token décodé :", decodedToken);
       return decodedToken.id || decodedToken.userId;
     } catch (err) {
       console.error("Erreur lors du décodage du token :", err);
@@ -141,7 +141,7 @@ class ApiService {
   }
 
   public async getUserProfile(userId: string): Promise<any> {
-    console.log("Appel API pour le profil utilisateur :", `${this.baseUrl}/user/${userId}/profile`);
+    // console.log("Appel API pour le profil utilisateur :", `${this.baseUrl}/user/${userId}/profile`);
     const response = await fetch(`${this.baseUrl}/user/${userId}/profile`, {
       method: "GET",
       headers: {
@@ -160,7 +160,7 @@ class ApiService {
   }
 
   public async getUserPublicProfile(userId: string): Promise<any> {
-    console.log(`Fetching public profile for user: ${userId}`);
+    // console.log(`Fetching public profile for user: ${userId}`);
     const response = await fetch(`${this.baseUrl}/user/${userId}/public`, {
       method: "GET",
       headers: {
