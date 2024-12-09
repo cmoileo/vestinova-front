@@ -4,67 +4,73 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: hsl(0, 0%, 100%);
+    --foreground: hsl(0, 0%, 10%);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: hsl(0, 0%, 95%);
+    --muted-foreground: hsl(0, 0%, 30%);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: hsl(0, 0%, 98%);
+    --popover-foreground: hsl(0, 0%, 20%);
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: hsl(0, 0%, 98%);
+    --card-foreground: hsl(0, 0%, 15%);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: hsl(0, 0%, 85%); 
+    --input: hsl(0, 0%, 90%);
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: hsl(0, 0%, 15%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --primary-hover: hsl(0, 0%, 20%);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: hsl(0, 0%, 60%);
+    --secondary-foreground: hsl(0, 0%, 10%);
+    --secondary-hover: hsl(0, 0%, 50%);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: hsl(40, 20%, 50%);
+    --accent-foreground: hsl(0, 0%, 100%);
+    --accent-hover: hsl(40, 20%, 60%);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: hsl(0, 80%, 40%);
+    --destructive-foreground: hsl(0, 0%, 100%);
 
-    --ring: 222.2 84% 4.9%;
+    --ring: hsl(0, 0%, 20%);
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: hsl(0, 0%, 10%);
+    --foreground: hsl(0, 0%, 90%);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: hsl(0, 0%, 15%);
+    --muted-foreground: hsl(0, 0%, 70%);
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: hsl(0, 0%, 15%);
+    --popover-foreground: hsl(0, 0%, 90%);
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: hsl(0, 0%, 18%);
+    --card-foreground: hsl(0, 0%, 85%);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: hsl(0, 0%, 25%); 
+    --input: hsl(0, 0%, 20%); 
+  
+    --primary: hsl(0, 0%, 90%); 
+    --primary-foreground: hsl(0, 0%, 10%); 
+    --primary-hover: hsl(0, 0%, 80%);
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: hsl(0, 0%, 30%);
+    --secondary-foreground: hsl(0, 0%, 95%); 
+    --secondary-hover: hsl(0, 0%, 40%);
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --accent: hsl(40, 30%, 55%);
+    --accent-foreground: hsl(0, 0%, 10%); 
+    --accent-hover: hsl(40, 30%, 65%);
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --destructive: hsl(0, 70%, 45%);
+    --destructive-foreground: hsl(0, 0%, 100%);
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 212.7 26.8% 83.9%;
+    --ring: hsl(0, 0%, 70%); 
   }
 }
 
@@ -77,10 +83,189 @@
   }
 }
 
-body {
-  background: antiquewhite;
+.header-container {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.promo-banner {
+  background-color: var(--accent);
+  color: var(--primary-foreground);
+  text-align: center;
+  padding: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  height: 80px;
+  background-color: var(--background);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-image {
+  max-height: 100%;
+  max-width: 150px;
+  
+}
+
+.logo-text {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+
+.search-section {
+  flex-grow: 1;
+  max-width: 400px;
+  margin: 0 1rem;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--muted);
+  border-radius: 8px;
+  background-color: var(--secondary);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.actions-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.auth-links {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.auth-links:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.sell-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sell-button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background-color: var(--background);
+}
+
+.nav-links a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.logo-image {
+  width: 150px;
+}
+
+.notification-button,
+.icon-user,
+.cart-button,
+.auth-links {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.notification-button:hover,
+.cart-button:hover,
+.auth-links:hover {
+  color: var(--accent);
 }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.icon-search {
+  color: var(--accent);
+}
+
+.icon-user {
+  color: var(--accent);
+}
+
+.icon-notification {
+  color: var(--accent);
+}
+
+.icon-cart {
+  color: var(--accent);
+}
+
+.notification-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .search-section {
+    margin-top: 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }
