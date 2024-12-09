@@ -7,6 +7,7 @@ import Profile from "@/views/Profile.vue";
 import Home from "@/views/Home.vue";
 import SingleItem from "@/views/SingleItem.vue";
 import Cart from "@/views/Cart.vue";
+import UserPublicProfile from '@/views/UserPublicProfile.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
           component: Cart
         }
       ]
+    },
+    {
+      path: '/user/:userId/public',
+      name: 'UserPublicProfile',
+      component: UserPublicProfile,
     },
     {
       path: '/onboarding',
