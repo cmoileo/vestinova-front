@@ -11,7 +11,7 @@ import type {ItemType} from "@/type/Item.type";
 import ItemCard from "@/components/cards/ItemCard.vue";
 
 const props = defineProps<{
-  items: ItemType[]
+  items: ItemType[] | []
 }>();
 
 </script>

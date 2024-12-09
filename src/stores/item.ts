@@ -4,7 +4,7 @@ import apiService from "@/service/api.service";
 
 export const useItemsStore = defineStore("itemsStore", {
   state: () => ({
-    data: <ItemType>[] | null,
+    data: null as ItemType[],
     loading: false,
     error: null as string | null,
   }),

@@ -6,6 +6,7 @@ import kidsCategoryImage from '@/assets/images/kids-category.jpg';
 import bannerImage from '@/assets/images/banner-3.jpg';
 import bannerImage2 from '@/assets/images/banner-4.jpg';
 import { useItemsStore} from "@/stores/item";
+import ItemList from "@/components/lists/ItemList.vue";
 
 const itemsStore = useItemsStore();
 
@@ -42,15 +43,7 @@ onMounted(async () => {
     <section class="new-collection py-16 text-center">
       <h2 class="text-4xl font-bold mb-8">NOUVELLE COLLECTION</h2>
       <p class="text-lg text-gray-600 mb-12">Notre dernière collection, où les styles classiques et contemporains se rencontrent en parfaite harmonie.</p>
-      <div class="collection-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="item in itemsStore.data" :key="item.id" class="collection-item bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2">
-          <img :src="item.image" :alt="item.name" class="collection-image w-full h-64 object-cover rounded-md mb-4"/>
-          <div class="collection-info">
-            <h3 class="collection-title text-2xl font-bold">{{ item.name }}</h3>
-            <p class="collection-price text-xl text-gray-600">{{ item.price }}€</p>
-          </div>
-        </div>
-      </div>
+      <Item-list :items="itemsStore.data" />
     </section>
 
     <section class="wear-to-wedding relative w-full h-[50vh] bg-cover bg-center flex items-center justify-center text-white"
