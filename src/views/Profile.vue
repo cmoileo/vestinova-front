@@ -31,8 +31,8 @@ const loading = ref<boolean>(true);
 
 onMounted(async () => {
   try {
-    const userId = apiService.getUserId(); // Récupérer l'ID utilisateur depuis le token JWT
-    userProfile.value = await apiService.getUserProfile(userId); // Récupérer le profil utilisateur
+    const userId = apiService.getUserId();
+    userProfile.value = await apiService.getUserProfile(userId);
   } catch (err: any) {
     error.value = err.message || "Erreur inconnue lors de la récupération du profil.";
   } finally {
