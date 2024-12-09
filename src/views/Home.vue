@@ -4,7 +4,7 @@ import manCategoryImage from '@/assets/images/man-category.jpg';
 import womanCategoryImage from '@/assets/images/woman-category.jpg';
 import kidsCategoryImage from '@/assets/images/kids-category.jpg';
 import bannerImage from '@/assets/images/banner-3.jpg';
-import bannerImage2 from '@/assets/images/banner-4.jpg';
+import bannerImage2 from '@/assets/images/banner-5.jpg';
 import { useItemsStore} from "@/stores/item";
 import ItemList from "@/components/lists/ItemList.vue";
 import { Skeleton} from "@/components/ui/skeleton";

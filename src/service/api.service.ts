@@ -1,5 +1,6 @@
 import {cookieManager} from "@/service/cookie.service";
 import type {ItemType} from "@/type/Item.type";
+import { jwtDecode } from "jwt-decode";
 
 class ApiService {
   private readonly baseUrl: string = 'http://localhost:3001/api';
