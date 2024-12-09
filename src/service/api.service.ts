@@ -117,6 +117,16 @@ class ApiService {
     });
     return await response.json();
   }
+
+  public async getItemsCount(): Promise<number> {
+    const response = await fetch(`${this.baseUrl}/items/count`, {
+      method: 'GET',
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+    });
+    return await response.json();
+  }
 }
 
 const apiService = new ApiService();
