@@ -1,5 +1,7 @@
 import {cookieManager} from "@/service/cookie.service";
 import type {ItemType} from "@/type/Item.type";
+import { jwtDecode } from "jwt-decode";
+
 
 class ApiService {
   private readonly baseUrl: string = 'http://localhost:3001/api';
@@ -9,9 +11,15 @@ class ApiService {
     this.getToken();
   }
 
-  private getToken(): string {
-    this.bearerToken = cookieManager.getCookie('token');
+  private getToken(): string | null {
+    this.bearerToken = cookieManager.getCookie("token");
+    console.log("Token récupéré :", this.bearerToken);
+    if (!this.bearerToken) {
+      throw new Error("Aucun token trouvé dans les cookies");
+    }
+    return this.bearerToken;
   }
+  
 
   public async register(data: {
     email: string;
@@ -117,6 +125,40 @@ class ApiService {
     });
     return await response.json();
   }
+
+  public getUserId(): string {
+    if (!this.bearerToken) {
+      throw new Error("Token JWT introuvable.");
+    }
+    try {
+      const decodedToken: any = jwtDecode(this.bearerToken);
+      console.log("Token décodé :", decodedToken);
+      return decodedToken.id || decodedToken.userId;
+    } catch (err) {
+      console.error("Erreur lors du décodage du token :", err);
+      throw new Error("Token JWT invalide.");
+    }
+  }
+
+  public async getUserProfile(userId: string): Promise<any> {
+    console.log("Appel API pour le profil utilisateur :", `${this.baseUrl}/user/${userId}/profile`);
+    const response = await fetch(`${this.baseUrl}/user/${userId}/profile`, {
+      method: "GET",
+      headers: {
+        Authorization: `${this.bearerToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      console.error("Erreur API :", errorMessage);
+      throw new Error("Failed to fetch user profile");
+    }
+  
+    return await response.json();
+  }
+  
 }
 
 const apiService = new ApiService();

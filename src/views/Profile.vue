@@ -1,67 +1,48 @@
 <template>
   <div>
-    <AutoForm
-      class="flex flex-col gap-8 md:w-2/3 md:mx-auto"
-      :form="form"
-      :schema="schema"
-      :field-config="{
-        password: {
-          inputProps: {
-            type: 'password',
-            placeholder: '••••••••'
-          },
-        },
-        confirmPassword: {
-          inputProps: {
-            type: 'password',
-            placeholder: '••••••••',
-            required: true,
-          },
-        },
-      }"
-      @submit="onSubmit"
-    >
-      <Button class="w-full" type="submit">Register</Button>
-    </AutoForm>
+    <h1>Profil Utilisateur</h1>
+    <div v-if="loading">Chargement...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+    <div v-else>
+      <p><strong>Prénom :</strong> {{ userProfile.firstname }}</p>
+      <p><strong>Nom :</strong> {{ userProfile.lastname }}</p>
+      <p><strong>Email :</strong> {{ userProfile.email }}</p>
+      <img v-if="userProfile.avatar" :src="userProfile.avatar" alt="Avatar" />
+      <div v-if="userProfile.items && userProfile.items.length">
+        <h2>Articles :</h2>
+        <ul>
+          <li v-for="item in userProfile.items" :key="item.id">{{ item.name }}</li>
+        </ul>
+      </div>
+      <div v-else>
+        <p>Aucun article associé.</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm } from 'vee-validate'
-import * as z from 'zod'
-import {AutoForm} from "@/components/ui/auto-form";
-import {Button} from "@/components/ui/button";
+import { ref, onMounted } from "vue";
+import apiService from "@/service/api.service";
 
-const schema = z.object({
-  firstName: z.string({required_error: 'First Name is required'}),
-  lastName: z.string({required_error: 'Last Name is required'}),
-  password: z.string({
-    required_error: 'Password is required.',
-  })
-    .min(8, {
-      message: 'Password must be at least 8 characters.',
-    })
-    .regex(/[a-z]/, {
-      message: 'Password must contain at least one lowercase letter.',
-    })
-    .regex(/[A-Z]/, {
-      message: 'Password must contain at least one uppercase letter.',
-    })
-    .regex(/[0-9]/, {
-      message: 'Password must contain at least one number.',
-    })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: 'Password must contain at least one special character.',
-    }),
-  confirmPassword: z.string({
-    required_error: 'Confirm Password is required.',
-  }).refine(data => data.password === data.confirm, {
-    message: 'Passwords must match.',
-    path: ['confirm'],
-  })
-})
-const form = useForm({
-  validationSchema: toTypedSchema(schema),
-})
+const userProfile = ref<any>(null);
+const error = ref<string | null>(null);
+const loading = ref<boolean>(true);
+
+onMounted(async () => {
+  try {
+    const userId = apiService.getUserId(); // Récupérer l'ID utilisateur depuis le token JWT
+    userProfile.value = await apiService.getUserProfile(userId); // Récupérer le profil utilisateur
+  } catch (err: any) {
+    error.value = err.message || "Erreur inconnue lors de la récupération du profil.";
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
+
+<style>
+.error {
+  color: red;
+}
+</style>
