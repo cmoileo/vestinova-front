@@ -5,11 +5,13 @@ import apiService from '@/service/api.service';
 import type { ItemType } from '@/type/Item.type';
 import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
+import {useCartStore} from "@/stores/cart";
 
 const route = useRoute();
 const router = useRouter();
 const itemId = ref<string>(route.params.id as string);
 const item = ref<ItemType | null>(null);
+const cartStore = useCartStore();
 
 const goToUserProfile = (userId: string) => {
   console.log("Redirecting to public profile of user:", userId);
@@ -21,9 +23,8 @@ onMounted(async () => {
 });
 
 const handleAddToCart = async () => {
-  await apiService.handleAddToCart({
-    "itemId": itemId.value
-  });
+  await apiService.handleAddToCart(itemId.value);
+  await cartStore.fetchCart();
 };
 </script>
 

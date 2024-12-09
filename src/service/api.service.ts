@@ -196,16 +196,13 @@ class ApiService {
     return await response.json();
   }
 
-  public async handleAddToCart(itemId: any): Promise<void> {
-    console.log('item data', itemId)
-    const response = await fetch(`${this.baseUrl}/cart`, {
+  public async handleAddToCart(itemId: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
       method: 'PUT',
       headers: {
         "authorization": `${this.bearerToken}`,
       },
-      body: JSON.stringify({itemId}),
     })
-    console.log(await response.json());
     return await response.json();
   }
 }
