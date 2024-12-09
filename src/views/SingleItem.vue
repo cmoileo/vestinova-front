@@ -13,6 +13,12 @@ const item = ref<ItemType | null>(null);
 onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
 });
+
+const handleAddToCart = async () => {
+  await apiService.handleAddToCart({
+    "itemId": itemId.value
+  });
+};
 </script>
 
 
@@ -21,7 +27,7 @@ onMounted(async () => {
     <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{{ item?.name }}</h1>
     <p>{{ item?.description }}</p>
     <p class="text-xl font-semibold tracking-tight transition-colors">{{ item?.price }}€</p>
-    <Button class="mt-12">Buy this item</Button>
+    <Button @click="handleAddToCart" class="mt-12">Add to cart</Button>
     <div class="flex flex-wrap mt-8 gap-2">
       <Badge v-for="category in item?.categories" :key="category.id">
         {{ category.name }}

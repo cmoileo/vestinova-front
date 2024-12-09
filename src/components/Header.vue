@@ -8,7 +8,9 @@
 
     <div class="main-header">
       <div class="logo-section">
-        <img src="@/assets/vestinova_logo.png" alt="Vestinova Logo" class="logo-image" />
+        <router-link to="/home">
+          <img src="@/assets/vestinova_logo.png" alt="Vestinova Logo" class="logo-image" />
+        </router-link>
       </div>
 
       <div class="actions-section">

@@ -127,6 +127,28 @@ class ApiService {
     });
     return await response.json();
   }
+
+  public async getCart(): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/cart-items`, {
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+    });
+    return await response.json();
+  }
+
+  public async handleAddToCart(itemId: any): Promise<void> {
+    console.log('item data', itemId)
+    const response = await fetch(`${this.baseUrl}/cart`, {
+      method: 'PUT',
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+      body: JSON.stringify({itemId}),
+    })
+    console.log(await response.json());
+    return await response.json();
+  }
 }
 
 const apiService = new ApiService();

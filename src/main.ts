@@ -12,8 +12,9 @@ import {CoCart, CoDelete, CoHome, CoSearch, CoUser, FaFlag, PxPlus, RiZhihuFill,
 addIcons(FaFlag, RiZhihuFill, CoCart, CoHome, CoUser, PxPlus, CoSearch, CoDelete, IoNotificationsCircleOutline);
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.component("v-icon", OhVueIcon);
 app.use(router)
 

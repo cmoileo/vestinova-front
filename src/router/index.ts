@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Profile from "@/views/Profile.vue";
 import Home from "@/views/Home.vue";
 import SingleItem from "@/views/SingleItem.vue";
+import Cart from "@/views/Cart.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
           path: '/item/:id',
           name: 'item',
           component: SingleItem
+        },
+        {
+          path: '/cart',
+          name: 'cart',
+          component: Cart
         }
       ]
     },
