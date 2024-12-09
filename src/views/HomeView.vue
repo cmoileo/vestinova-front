@@ -4,8 +4,10 @@ import { cookieManager } from "@/service/cookie.service";
 import router from "@/router";
 import { useCategoryStore } from "@/stores/category";
 import Header from "@/components/Header.vue";
+import {useItemsStore} from "@/stores/item";
 
 const apiResponseStore = useCategoryStore();
+const itemsStore = useItemsStore();
 
 onMounted(async () => {
   if (!cookieManager.getCookie("token")) {
@@ -13,6 +15,7 @@ onMounted(async () => {
   } else {
     await router.push("/home")
     await apiResponseStore.fetchData();
+    await itemsStore.getMaxPagesCount()
   }
 });
 </script>
@@ -20,7 +23,7 @@ onMounted(async () => {
 <template>
   <Header />
   <div class="md:mx-16 mx-8 h-screen">
-    <main class="h-[90%] py-4 pb-8 px-4 flex flex-col gap-8">
+    <main class="py-4 pb-8 px-4 flex flex-col gap-8">
       <RouterView />
     </main>
     <!-- <Footer /> -->
