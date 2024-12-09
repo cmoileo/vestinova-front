@@ -3,4 +3,5 @@
 - [ ] Images to product
 - [ ] User profile (profile data + items)
 - [x] Loading skeleton on items list
-- [ ] User public page
+- [x] User public page
+- [ ] Add cart
