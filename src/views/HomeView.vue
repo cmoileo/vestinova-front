@@ -25,8 +25,8 @@ onMounted(async () => {
 
 <template>
   <Header />
-  <div class="md:mx-16 mx-8 h-screen">
-    <main class="py-4 pb-8 px-4 flex flex-col gap-8">
+  <div>
+    <main>
       <RouterView />
     </main>
     <!-- <Footer /> -->
