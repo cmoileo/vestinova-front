@@ -2,6 +2,8 @@ import {cookieManager} from "@/service/cookie.service";
 import type {ItemType} from "@/type/Item.type";
 import { jwtDecode } from "jwt-decode";
 
+
+
 class ApiService {
   private readonly baseUrl: string = 'http://localhost:3001/api';
   public bearerToken: string | null = null;
@@ -214,6 +216,65 @@ class ApiService {
       },
     })
   }
+
+  public async likeItem(itemId: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/items/${itemId}/like`, {
+      method: 'POST',
+      headers: {
+        "authorization": `${this.bearerToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      console.error("Erreur lors du like de l'élément :", errorMessage);
+      throw new Error("Failed to like item");
+    }
+  
+    return await response.json();
+  }
+  
+  public async getItemLikes(itemId: string): Promise<number> {
+    const response = await fetch(`${this.baseUrl}/items/${itemId}/likes`, {
+      method: 'GET',
+      headers: {
+        "authorization": `${this.bearerToken}`,
+      },
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      console.error("Erreur lors de la récupération des likes :", errorMessage);
+      throw new Error("Failed to fetch likes for item");
+    }
+  
+    return await response.json();
+  }
+  
+  public async getLikedItems(): Promise<ItemType[]> {
+    try {
+      const response = await fetch(`${this.baseUrl}/user/liked-items`, {
+        method: "GET",
+        headers: {
+          Authorization: `${this.bearerToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Unable to fetch liked items");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching liked items:", error);
+      throw error;
+    }
+  }
+
+  
 }
 
 const apiService = new ApiService();

@@ -8,14 +8,32 @@ import bannerImage2 from '@/assets/images/banner-5.jpg';
 import { useItemsStore } from "@/stores/item";
 import ItemList from "@/components/lists/ItemList.vue";
 import { Skeleton } from "@/components/ui/skeleton";
+import apiService from "@/service/api.service";
 
 const itemsStore = useItemsStore();
+const likedProducts = ref([]);
+const loadingLikedProducts = ref(true);
 
 const categories = ref([
   { id: 1, name: 'Homme', image: manCategoryImage },
   { id: 2, name: 'Femme', image: womanCategoryImage },
   { id: 3, name: 'Enfant', image: kidsCategoryImage },
 ]);
+
+const fetchLikedProducts = async () => {
+  try {
+    loadingLikedProducts.value = true;
+    likedProducts.value = await apiService.getLikedItems();
+  } catch (error) {
+    console.error("Erreur lors de la récupération des produits aimés :", error);
+  } finally {
+    loadingLikedProducts.value = false;
+  }
+};
+
+onMounted(async () => {
+  await fetchLikedProducts();
+});
 
 onMounted(async () => {
   const searchQuery = window.location.search;
@@ -40,6 +58,42 @@ onMounted(async () => {
         </p>
         <button class="mt-6 py-3 px-8 border border-white text-white font-semibold rounded-md transition-all">Vendre</button>
         <button class="mt-3 py-3 px-8 sell-button font-semibold rounded-md transition-all">Explorer les collections →</button>
+      </div>
+    </section>
+
+    <section class="liked-products py-16 bg-gray-100">
+      <div class="container mx-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-4xl font-bold">Vos produits favoris</h2>
+        </div>
+        <div v-if="loadingLikedProducts" class="flex gap-6">
+          <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
+          <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
+          <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
+        </div>
+        <div v-else-if="likedProducts.length > 0" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div
+            v-for="product in likedProducts"
+            :key="product.id"
+            class="product-card border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+          >
+            <img
+              :src="product.imageUrl || '/placeholder.jpg'"
+              :alt="product.name"
+              class="w-full h-60 object-cover"
+            />
+            <div class="p-4">
+              <h3 class="text-lg font-semibold truncate">{{ product.name }}</h3>
+              <p class="text-sm text-gray-500 truncate">
+                {{ product.categories?.map(c => c.name).join(", ") || "Sans catégorie" }}
+              </p>
+              <p class="text-lg font-bold mt-2">€ {{ product.price }}</p>
+            </div>
+          </div>
+        </div>
+        <div v-else class="text-center text-gray-600">
+          Vous n'avez pas encore liké de produits.
+        </div>
       </div>
     </section>
 

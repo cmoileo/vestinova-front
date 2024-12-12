@@ -272,3 +272,24 @@
     align-items: flex-start;
   }
 }
+.see-whats-new {
+  background-color: #f9f9f9;
+}
+
+.product-card img {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.product-card button {
+  background-color: var(--accent);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.product-card button:hover {
+  background-color: var(--accent-hover);
+}
