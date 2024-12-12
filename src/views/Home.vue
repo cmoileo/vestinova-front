@@ -65,7 +65,14 @@ onMounted(async () => {
       <div class="container mx-auto">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-4xl font-bold">Vos produits favoris</h2>
+          <router-link
+            to="/liked-products"
+            class="text-primary text-lg font-semibold hover:underline"
+          >
+            Afficher tout
+          </router-link>
         </div>
+
         <div v-if="loadingLikedProducts" class="flex gap-6">
           <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
           <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
@@ -73,7 +80,7 @@ onMounted(async () => {
         </div>
         <div v-else-if="likedProducts.length > 0" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <div
-            v-for="product in likedProducts"
+            v-for="product in likedProducts.slice(0, 4)"
             :key="product.id"
             class="product-card border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
           >
