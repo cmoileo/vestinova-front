@@ -44,9 +44,9 @@ const router = createRouter({
           component: UserPublicProfile,
         },
         {
-          path: '/liked-products',
-          name: 'likedProducts',
-          component: LikedProducts,
+          path: "/liked-products",
+          name: "liked-products",
+          component: () => import("@/views/LikedProducts.vue"),
         },
       ]
     },

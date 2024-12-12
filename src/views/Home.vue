@@ -9,10 +9,20 @@ import { useItemsStore } from "@/stores/item";
 import ItemList from "@/components/lists/ItemList.vue";
 import { Skeleton } from "@/components/ui/skeleton";
 import apiService from "@/service/api.service";
+import { useRouter } from "vue-router";
 
 const itemsStore = useItemsStore();
 const likedProducts = ref([]);
 const loadingLikedProducts = ref(true);
+
+const router = useRouter();
+
+const goToProduct = (productId: string) => {
+  router.push({ name: 'item', params: { id: productId } });
+};
+const goToAllLikedProducts = () => {
+  router.push({ name: "liked-products" });
+};
 
 const categories = ref([
   { id: 1, name: 'Homme', image: manCategoryImage },
@@ -25,7 +35,7 @@ const fetchLikedProducts = async () => {
     loadingLikedProducts.value = true;
     likedProducts.value = await apiService.getLikedItems();
   } catch (error) {
-    console.error("Erreur lors de la récupération des produits aimés :", error);
+    console.error('Erreur lors de la récupération des produits aimés :', error);
   } finally {
     loadingLikedProducts.value = false;
   }
@@ -34,6 +44,7 @@ const fetchLikedProducts = async () => {
 onMounted(async () => {
   await fetchLikedProducts();
 });
+
 
 onMounted(async () => {
   const searchQuery = window.location.search;
@@ -65,12 +76,12 @@ onMounted(async () => {
       <div class="container mx-auto">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-4xl font-bold">Vos produits favoris</h2>
-          <router-link
-            to="/liked-products"
-            class="text-primary text-lg font-semibold hover:underline"
+          <button
+            @click="goToAllLikedProducts"
+            class="py-2 px-6 bg-primary rounded-md hover:bg-primary-dark transition"
           >
             Afficher tout
-          </router-link>
+          </button>
         </div>
 
         <div v-if="loadingLikedProducts" class="flex gap-6">
@@ -82,18 +93,13 @@ onMounted(async () => {
           <div
             v-for="product in likedProducts.slice(0, 4)"
             :key="product.id"
-            class="product-card border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+            class="product-card border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
+            @click="goToProduct(product.id)"
           >
-            <img
-              :src="product.imageUrl || '/placeholder.jpg'"
-              :alt="product.name"
-              class="w-full h-60 object-cover"
-            />
+            <img :src="product.imageUrl" :alt="product.name" class="w-full h-60 object-cover" />
             <div class="p-4">
               <h3 class="text-lg font-semibold truncate">{{ product.name }}</h3>
-              <p class="text-sm text-gray-500 truncate">
-                {{ product.categories?.map(c => c.name).join(", ") || "Sans catégorie" }}
-              </p>
+              <p class="text-sm text-gray-500 truncate">{{ product.category }}</p>
               <p class="text-lg font-bold mt-2">€ {{ product.price }}</p>
             </div>
           </div>
