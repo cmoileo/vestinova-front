@@ -110,7 +110,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="new-collection py-16 text-center">
+    <section class="new-collection text-center flex-grow px-4 md:px-8 lg:px-16 py-6">
       <h2 class="text-4xl font-bold mb-8">NOUVELLE COLLECTION</h2>
       <p class="text-lg text-gray-600 mb-12">
         Notre dernière collection, où les styles classiques et contemporains se rencontrent en parfaite harmonie.

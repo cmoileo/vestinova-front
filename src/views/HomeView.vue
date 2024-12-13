@@ -25,11 +25,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Header />
-  <div>
-    <main>
-      <RouterView />
-    </main>
+  <div class="flex flex-col min-h-screen">
+    <Header class="mb-8" />
+    <div>
+      <main>
+        <RouterView />
+      </main>
+    </div>
+    <Footer class="mt-12" />
   </div>
-  <Footer />
 </template>
