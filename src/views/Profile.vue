@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-page container mx-auto py-10 px-4">
+  <div class="profile-page container mx-auto py-10 px-6">
     <h1 class="text-3xl font-bold text-center mb-8">Profil Utilisateur</h1>
 
     <div class="user-info grid grid-cols-1 md:grid-cols-2 gap-8">
