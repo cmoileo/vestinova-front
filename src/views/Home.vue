@@ -141,7 +141,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="category-section py-16 flex flex-wrap gap-8 justify-center">
+    <section class="category-section py-16 flex flex-wrap gap-8 justify-center bg-gray-100">
       <div
         v-for="category in categories"
         :key="category.id"

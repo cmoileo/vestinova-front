@@ -4,6 +4,7 @@ import { cookieManager } from "@/service/cookie.service";
 import router from "@/router";
 import { useCategoryStore } from "@/stores/category";
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 import {useItemsStore} from "@/stores/item";
 import {useCartStore} from "@/stores/cart";
 
@@ -29,6 +30,6 @@ onMounted(async () => {
     <main>
       <RouterView />
     </main>
-    <!-- <Footer /> -->
   </div>
+  <Footer />
 </template>
