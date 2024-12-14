@@ -96,7 +96,7 @@
 }
 
 
-.header-container {
+.header-container-home {
   position: fixed;
   top: 0;
   width: 100%;
@@ -108,7 +108,7 @@
   flex-direction: column;
 }
 
-.header-container.scrolled {
+.header-container-home.scrolled {
   background-color: white;
   color: black;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

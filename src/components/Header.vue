@@ -1,12 +1,11 @@
 <template>
-  <header :class="['header-container', isScrolled ? 'scrolled' : '']">
-    <!-- <div v-if="showPromoBanner" class="promo-banner">
-      <p class="promo-message">
-        -30% sur TOUT avec le code JOYEUX30 valable jusqu'au 16 décembre 23h59 (15€ offerts max)
-      </p>
-      <button class="close-banner" @click="closePromoBanner">✕</button>
-    </div> -->
-
+  <header
+    :class="[
+      'header-container-home',
+      isScrolled || !isHomePage ? 'scrolled' : '',
+      isHomePage ? 'transparent-header' : 'white-header'
+    ]"
+  >
     <div class="main-header">
       <button class="burger-menu" @click="toggleMenu">
         <span></span>
@@ -32,9 +31,6 @@
         <router-link to="/profile">
           <v-icon scale="1.5" name="co-user" class="icon-user" />
         </router-link>
-        <!-- <button class="notification-button">
-          <v-icon scale="1.5" name="co-ioNotificationsCircleOutline" class="icon-notification" />
-        </button> -->
         <router-link to="/cart">
           <v-icon scale="1.5" name="co-cart" class="icon-cart" />
         </router-link>
@@ -54,9 +50,6 @@
         <router-link to="/profile">
           <v-icon scale="1.5" name="co-user" class="icon-user" />
         </router-link>
-        <button class="notification-button">
-          <v-icon scale="1.5" name="co-ioNotificationsCircleOutline" class="icon-notification" />
-        </button>
         <router-link to="/cart">
           <v-icon scale="1.5" name="co-cart" class="icon-cart" />
         </router-link>
@@ -67,7 +60,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { useRoute } from "vue-router";
 import CreateItemModal from "@/components/modal/Create-item-modal.vue";
 import { useCategoryStore } from "@/stores/category";
 import SearchBar from "@/components/modal/Search-bar.vue";
@@ -76,13 +70,11 @@ import { useItemsStore } from "@/stores/item";
 const apiResponseStore = useCategoryStore();
 const itemsStore = useItemsStore();
 
-// const showPromoBanner = ref(true);
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
+const route = useRoute();
 
-// const closePromoBanner = () => {
-//   showPromoBanner.value = false;
-// };
+const isHomePage = computed(() => route.name === "home");
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -94,11 +86,15 @@ const handleScroll = () => {
 
 onMounted(() => {
   apiResponseStore.fetchData();
-  window.addEventListener("scroll", handleScroll);
+  if (isHomePage.value) {
+    window.addEventListener("scroll", handleScroll);
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+  if (isHomePage.value) {
+    window.removeEventListener("scroll", handleScroll);
+  }
 });
 
 const updateItems = (newItems) => {

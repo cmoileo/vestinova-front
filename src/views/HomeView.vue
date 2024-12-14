@@ -27,7 +27,7 @@ onMounted(async () => {
 <template>
   <div class="flex flex-col min-h-screen">
     <Header class="mb-8" />
-    <div class="mt-4">
+    <div>
       <main>
         <RouterView />
       </main>
