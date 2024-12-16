@@ -1,41 +1,57 @@
 <script lang="ts">
 import { useCartStore } from "@/stores/cart";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import ItemCard from "@/components/cards/ItemCard.vue";
-import {Button} from "@/components/ui/button";
-import apiService from "@/service/api.service";
+import { Button } from "@/components/ui/button";
 
 export default {
-  components: {Button, ItemCard},
+  components: { Button, ItemCard },
   setup() {
     const cartStore = useCartStore();
-    const cartRef = ref<any>(null);
 
     onMounted(() => {
-      cartRef.value = cartStore.data;
-      console.log(cartRef.value);
+      cartStore.fetchCart();
     });
 
-    const handleRemoveItemFromCart = async (itemId) => {
-      console.log("Removing item from cart", itemId);
-      await apiService.removeItemFromCart(itemId)
-      await cartStore.fetchCart();
-      cartRef.value = cartStore.data;
-    }
+    const handleRemoveItemFromCart = (itemId: string) => {
+      cartStore.removeItemFromCart(itemId);
+    };
 
-    return { cartStore, cartRef, handleRemoveItemFromCart };
+    const handleClearCart = () => {
+      cartStore.clearCart();
+    };
+
+    return { cartStore, handleRemoveItemFromCart, handleClearCart };
   },
 };
 </script>
 
 <template>
-  <div v-if="cartRef && cartRef.items.length === 0">
-    Your cart is empty
-  </div>
-  <div v-else>
-    <div class="felx items-center gap-8" v-for="item in cartRef?.items" :key="item.id">
-      <item-card :item="item" />
-      <Button @click="handleRemoveItemFromCart(item.cart_item.CartEntityId)">Remove</Button>
+  <div class="container mx-auto py-10">
+    <h1 class="text-3xl font-bold text-center mb-8">Votre Panier</h1>
+
+    <div v-if="cartStore.items.length === 0" class="text-center text-gray-500">
+      Votre panier est vide.
+    </div>
+
+    <div v-else>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-for="item in cartStore.items" :key="item.id" class="relative">
+          <ItemCard :item="item" />
+          <button
+            @click="handleRemoveItemFromCart(item.id)"
+            class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+          >
+            Supprimer
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center mt-6">
+        <Button @click="handleClearCart" class="bg-red-500 text-white">
+          Vider le panier
+        </Button>
+      </div>
     </div>
   </div>
 </template>

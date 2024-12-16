@@ -22,9 +22,11 @@ onMounted(async () => {
   item.value = await apiService.getItem(itemId.value) as ItemType;
 });
 
-const handleAddToCart = async () => {
-  await apiService.handleAddToCart(itemId.value);
-  await cartStore.fetchCart();
+const handleAddToCart = () => {
+  if (item.value) {
+    cartStore.addItemToCart(item.value);
+    alert("Article ajouté au panier !");
+  }
 };
 </script>
 
@@ -100,10 +102,3 @@ const handleAddToCart = async () => {
       </div>
     </div>
 </template>
-
-<style>
-.container {
-  max-width: 1200px;
-}
-
-</style>

@@ -1,23 +1,26 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 import apiService from "@/service/api.service";
+import type { ItemType } from "@/type/Item.type";
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({
-    data: null,
-    loading: false,
-    error: null,
+    items: [] as ItemType[],
   }),
   actions: {
-    async fetchCart() {
-      this.loading = true;
-      this.error = null;
-      try {
-        this.data = await apiService.getCart();
-      } catch (err: any) {
-        this.error = (err as Error).message || "An error occurred";
-      } finally {
-        this.loading
-      }
-    }
+    fetchCart() {
+      this.items = apiService.getCartFromLocalStorage();
+    },
+    addItemToCart(item: ItemType) {
+      apiService.addItemToCart(item);
+      this.fetchCart();
+    },
+    removeItemFromCart(itemId: string) {
+      apiService.removeItemFromCart(itemId);
+      this.fetchCart();
+    },
+    clearCart() {
+      apiService.clearCart();
+      this.fetchCart();
+    },
   },
 });

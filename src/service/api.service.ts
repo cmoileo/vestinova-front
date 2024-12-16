@@ -216,32 +216,61 @@ class ApiService {
     return await response.json();
   }
 
-  public async getCart(): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/cart-items`, {
-      headers: {
-        "authorization": `${this.bearerToken}`,
-      },
-    });
-    return await response.json();
-  }
+  // public async getCart(): Promise<void> {
+  //   const response = await fetch(`${this.baseUrl}/cart-items`, {
+  //     headers: {
+  //       "authorization": `${this.bearerToken}`,
+  //     },
+  //   });
+  //   return await response.json();
+  // }
 
-  public async handleAddToCart(itemId: string): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
-      method: 'PUT',
-      headers: {
-        "authorization": `${this.bearerToken}`,
-      },
-    })
-  }
+  // public async handleAddToCart(itemId: string): Promise<void> {
+  //   const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       "authorization": `${this.bearerToken}`,
+  //     },
+  //   })
+  // }
 
-  public async removeItemFromCart(itemId: string): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
-      method: 'PATCH',
-      headers: {
-        "authorization": `${this.bearerToken}`,
-      },
-    })
+  // public async removeItemFromCart(itemId: string): Promise<void> {
+  //   const response = await fetch(`${this.baseUrl}/cart/${itemId}`, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       "authorization": `${this.bearerToken}`,
+  //     },
+  //   })
+  // }
+
+  public getCartFromLocalStorage(): ItemType[] {
+    const cart = localStorage.getItem("cart");
+    return cart ? JSON.parse(cart) : [];
   }
+  
+  public saveCartToLocalStorage(cart: ItemType[]): void {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  
+  public addItemToCart(item: ItemType): void {
+    const cart = this.getCartFromLocalStorage();
+    const exists = cart.find((cartItem) => cartItem.id === item.id);
+    if (!exists) {
+      cart.push(item);
+      this.saveCartToLocalStorage(cart);
+    }
+  }
+  
+  public removeItemFromCart(itemId: string): void {
+    const cart = this.getCartFromLocalStorage();
+    const updatedCart = cart.filter((item) => item.id !== itemId);
+    this.saveCartToLocalStorage(updatedCart);
+  }
+  
+  public clearCart(): void {
+    localStorage.removeItem("cart");
+  }
+  
 
   public async likeItem(itemId: string): Promise<void> {
     const response = await fetch(`${this.baseUrl}/items/${itemId}/like`, {
