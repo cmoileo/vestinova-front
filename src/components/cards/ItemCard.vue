@@ -2,19 +2,19 @@
   <div
     class="product-card cursor-pointer transition bg-white shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 relative flex flex-col"
   >
-  <button
-  @click.stop="toggleLike"
-  class="absolute top-4 right-4 p-2 rounded-full shadow-md hover:bg-gray-100 transition"
->
-  <v-icon
-    :name="isLiked ? 'ri-hearts-fill' : 'co-heart'"
-    :class="[
-      'transition-all duration-200',
-      isLiked ? 'text-red-500 scale-110' : 'text-gray-400 hover:text-red-500'
-    ]"
-    scale="1.5"
-  />
-</button>
+    <button
+      @click.stop="toggleLike"
+      class="absolute top-4 right-4 p-2 rounded-full shadow-md hover:bg-gray-100 transition"
+    >
+      <v-icon
+        :name="isLiked ? 'ri-hearts-fill' : 'co-heart'"
+        :class="[
+          'transition-all duration-200',
+          isLiked ? 'text-red-500 scale-110' : 'text-gray-400 hover:text-red-500',
+        ]"
+        scale="1.5"
+      />
+    </button>
 
     <img
       v-if="props.item.imageUrl"
@@ -24,7 +24,6 @@
     />
 
     <div class="p-4 flex flex-col gap-2 flex-grow">
-
       <div class="flex justify-between items-center mb-2">
         <h3 class="text-lg font-bold text-gray-800 truncate">{{ props.item.name }}</h3>
         <p class="text-primary font-semibold">{{ props.item.price }}€</p>
@@ -84,9 +83,9 @@ const toggleLike = async () => {
 };
 
 const cartStore = useCartStore();
-const addToCart = async () => {
+const addToCart = () => {
   try {
-    await cartStore.addItemToCart(props.item.id);
+    cartStore.addItemToCart(props.item);
     alert("Article ajouté au panier !");
   } catch (error) {
     console.error("Erreur lors de l'ajout au panier :", error);

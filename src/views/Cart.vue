@@ -27,7 +27,7 @@ export default {
 </script>
 
 <template>
-  <div class="container mx-auto py-10">
+  <div class="container mt-32 bg-gray-100 px-6 py-8 rounded-lg shadow-md">
     <h1 class="text-3xl font-bold text-center mb-8">Votre Panier</h1>
 
     <div v-if="cartStore.items.length === 0" class="text-center text-gray-500">
@@ -48,7 +48,7 @@ export default {
       </div>
 
       <div class="text-center mt-6">
-        <Button @click="handleClearCart" class="bg-red-500 text-white">
+        <Button @click="handleClearCart" class="bg-red-500 text-white hover:bg-red-600">
           Vider le panier
         </Button>
       </div>
