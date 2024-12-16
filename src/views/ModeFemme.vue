@@ -6,8 +6,8 @@
     >
       <div class="absolute inset-0 bg-black opacity-50"></div>
       <div class="relative z-10">
-        <h1 class="text-5xl font-bold uppercase">Mode Homme</h1>
-        <p class="text-lg mt-4">Découvrez notre sélection de vêtements pour homme, alliant style et confort.</p>
+        <h1 class="text-5xl font-bold uppercase">Mode Femme</h1>
+        <p class="text-lg mt-4">Découvrez notre sélection de vêtements pour Femme, alliant style et confort.</p>
       </div>
     </section>
 
