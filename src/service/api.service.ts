@@ -126,6 +126,7 @@ class ApiService {
     });
     return await response.json();
   }
+  
 
   public getUserId(): string {
     if (!this.bearerToken) {
