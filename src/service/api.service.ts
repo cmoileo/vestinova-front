@@ -274,6 +274,27 @@ class ApiService {
     }
   }
 
+  public async getItemsByCategory(categoryName: string): Promise<ItemType[]> {
+    try {
+      const response = await fetch(`${this.baseUrl}/items/category/${categoryName}`, {
+        headers: {
+          Authorization: `${this.bearerToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des articles par catégorie");
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Erreur dans getItemsByCategory :", error);
+      throw error;
+    }
+  }
+  
+
   
 }
 
