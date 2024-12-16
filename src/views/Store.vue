@@ -37,8 +37,9 @@
         <Skeleton class="w-[100%] h-80 rounded-xl " style="background: grey" />
         <Skeleton class="w-[100%] h-80 rounded-xl " style="background: grey" />
       </div>
-      <div v-if="!itemsStore.loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <ItemCard v-for="item in itemsStore.data" :key="item.id" :item="item" />
+      <div v-if="!itemsStore.loading">
+        <Item-list :items="itemsStore.data" />
+        <!-- <ItemCard v-for="item in itemsStore.data" :key="item.id" :item="item" /> -->
       </div>
     </section>
 
@@ -75,6 +76,7 @@ import apiService from "@/service/api.service";
 import SearchBar from "@/components/modal/Search-bar.vue";
 import { useItemsStore } from "@/stores/item";
 import ItemCard from "@/components/cards/ItemCard.vue";
+import ItemList from "@/components/lists/ItemList.vue";
 import { Skeleton } from "@/components/ui/skeleton";
 import heroImage from "@/assets/images/banner-5.jpg";
 

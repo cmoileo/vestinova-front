@@ -1,6 +1,9 @@
 <template>
   <div class="bg-gray-100">
-    <section class="hero-section relative flex items-center justify-center text-white text-center py-24" :style="`background-image: url(${heroImage});`">
+    <section
+      class="hero-section relative flex items-center justify-center text-white text-center py-24"
+      :style="`background-image: url(${heroImage});`"
+    >
       <div class="absolute inset-0 bg-black opacity-50"></div>
       <div class="relative z-10">
         <h1 class="text-5xl font-bold uppercase">Mode Homme</h1>
@@ -8,7 +11,7 @@
       </div>
     </section>
 
-    <section class="container mx-auto px-4 py-6">
+    <section class="px-4 lg:px-16 py-6">
       <button
         @click="isFilterOpen = true"
         class="sell-button text-white px-6 py-2 rounded-md transition"
@@ -24,24 +27,18 @@
       @close="isFilterOpen = false"
     />
 
-
-    <section class="container mx-auto py-12 px-4">
-      <h2 class="text-3xl font-bold mb-6 text-center">Nos Produits</h2>
-      <div v-if="loading" class="text-center">
-        <p>Chargement des articles...</p>
+    <section class="new-collection text-center flex-grow px-4 md:px-8 lg:px-16 py-6">
+      <h2 class="text-4xl font-bold mb-8">NOUVELLE COLLECTION</h2>
+      <p class="text-lg text-gray-600 mb-12">
+        Notre dernière collection, où les styles classiques et contemporains se rencontrent en parfaite harmonie.
+      </p>
+      <div v-if="loading" class="flex gap-12">
+        <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
+        <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
+        <Skeleton class="w-[100%] h-80 rounded-xl" style="background: grey" />
       </div>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <div
-          v-for="item in items"
-          :key="item.id"
-          class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
-        >
-          <img :src="item.imageUrl" :alt="item.name" class="w-full h-60 object-cover" />
-          <div class="p-4">
-            <h3 class="text-lg font-semibold truncate">{{ item.name }}</h3>
-            <p class="text-primary font-bold mt-2">€ {{ item.price }}</p>
-          </div>
-        </div>
+      <div v-if="!loading">
+        <Item-list :items="items" />
       </div>
     </section>
 
@@ -69,13 +66,14 @@
         <p v-if="isSubscribed" class="mt-4 text-green-300">Merci de vous être abonné !</p>
       </div>
     </section>
-
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import SearchBar from "@/components/modal/Search-bar.vue";
+import ItemList from "@/components/lists/ItemList.vue";
+import { Skeleton } from "@/components/ui/skeleton";
 import apiService from "@/service/api.service";
 import heroImage from "@/assets/images/man-category.jpg";
 
