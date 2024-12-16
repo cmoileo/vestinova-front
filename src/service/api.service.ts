@@ -161,6 +161,31 @@ class ApiService {
     return await response.json();
   }
 
+  public async updateUserProfile(data: { firstname: string; lastname: string; email: string}): Promise<any> {
+    const userId = this.getUserId();
+  
+    const formData = new FormData();
+    formData.append("firstname", data.firstname);
+    formData.append("lastname", data.lastname);
+    formData.append("email", data.email);
+  
+    const response = await fetch(`${this.baseUrl}/auth/update/${userId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `${this.bearerToken}`,
+      },
+      body: formData,
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(errorMessage || "Erreur lors de la mise à jour du profil");
+    }
+  
+    return await response.json();
+  }
+  
+
   public async getUserPublicProfile(userId: string): Promise<any> {
     // console.log(`Fetching public profile for user: ${userId}`);
     const response = await fetch(`${this.baseUrl}/user/${userId}/public`, {
