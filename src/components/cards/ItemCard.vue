@@ -1,6 +1,6 @@
 <template>
   <div
-    class="product-card cursor-pointer transition bg-white shadow-md rounded-3xl overflow-hidden hover:shadow-lg hover:-translate-y-1 relative flex flex-col"
+    class="product-card cursor-pointer transition bg-white shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 relative flex flex-col"
   >
   <button
   @click.stop="toggleLike"

@@ -11,7 +11,7 @@ import UserPublicProfile from '@/views/UserPublicProfile.vue';
 import LikedProducts from '@/views/LikedProducts.vue';
 import ModeHomme from '@/views/ModeHomme.vue';
 import ModeFemme from '@/views/ModeFemme.vue';
-// import Store from '@/views/Store.vue';
+import Store from '@/views/Store.vue';
 
 
 const router = createRouter({
@@ -60,10 +60,10 @@ const router = createRouter({
           name: "modeFemme",
           component: ModeFemme 
         },
-        // { path: "/store",
-        //   name: "store",
-        //   component: Store 
-        // },
+        { path: "/store",
+          name: "store",
+          component: Store 
+        },
       ]
     },
     {
