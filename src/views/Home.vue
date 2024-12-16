@@ -2,7 +2,6 @@
 import { ref, onMounted } from "vue";
 import manCategoryImage from '@/assets/images/man-category.jpg';
 import womanCategoryImage from '@/assets/images/woman-category.jpg';
-import kidsCategoryImage from '@/assets/images/kids-category.jpg';
 import bannerImage from '@/assets/images/banner-3.jpg';
 import bannerImage2 from '@/assets/images/banner-5.jpg';
 import { useItemsStore } from "@/stores/item";
@@ -14,6 +13,8 @@ import { useRouter } from "vue-router";
 const itemsStore = useItemsStore();
 const likedProducts = ref([]);
 const loadingLikedProducts = ref(true);
+const email = ref("");
+const isSubscribed = ref(false);
 
 const router = useRouter();
 
@@ -25,9 +26,8 @@ const goToAllLikedProducts = () => {
 };
 
 const categories = ref([
-  { id: 1, name: 'Homme', image: manCategoryImage },
-  { id: 2, name: 'Femme', image: womanCategoryImage },
-  { id: 3, name: 'Enfant', image: kidsCategoryImage },
+  { id: 1, name: 'Homme', image: manCategoryImage, route: "/mode-homme" },
+  { id: 2, name: 'Femme', image: womanCategoryImage, route: "/mode-femme" },
 ]);
 
 const fetchLikedProducts = async () => {
@@ -39,6 +39,12 @@ const fetchLikedProducts = async () => {
   } finally {
     loadingLikedProducts.value = false;
   }
+};
+
+const handleSubscription = () => {
+  isSubscribed.value = true;
+  setTimeout(() => (isSubscribed.value = false), 5000);
+  email.value = "";
 };
 
 onMounted(async () => {
@@ -67,8 +73,10 @@ onMounted(async () => {
           Découvrez la nouvelle manière de consommer la mode. <br />
           Achetez, vendez et donnez une seconde vie à vos vêtements tout en économisant jusqu'à 80% par rapport aux prix en magasin.
         </p>
-        <button class="mt-6 py-3 px-8 border border-white text-white font-semibold rounded-md transition-all">Vendre</button>
-        <button class="mt-3 py-3 px-8 sell-button font-semibold rounded-md transition-all">Explorer les collections →</button>
+
+        <router-link to="/store" class="mt-3 py-3 px-8 sell-button font-semibold rounded-md transition-all">
+          Explorer les collections →
+        </router-link>
       </div>
     </section>
 
@@ -135,9 +143,6 @@ onMounted(async () => {
           L'application de seconde main pour acheter et revendre des affaires pour toute la famille. <br />
           Jusqu'à 80% moins chers qu'en magasin.
         </p>
-        <button class="wear-button bg-white text-black py-3 px-6 rounded-md hover:bg-gray-300 transition-all">
-          Voir Détails
-        </button>
       </div>
     </section>
 
@@ -150,12 +155,38 @@ onMounted(async () => {
         <img :src="category.image" :alt="category.name" class="w-full h-[350px] object-cover" />
         <div class="category-content absolute bottom-0 w-full bg-black bg-opacity-50 p-4 text-center text-white">
           <h3 class="text-2xl font-bold">{{ category.name }}</h3>
-          <button
-            class="category-button mt-4 bg-white text-black py-2 px-4 rounded-md hover:bg-gray-300 transition-all"
+          <router-link
+            :to="category.route"
+            class="category-button mt-4 bg-white text-black py-2 px-4 rounded-md hover:bg-gray-300 transition-all inline-block"
           >
             Voir Détails
-          </button>
+          </router-link>
         </div>
+      </div>
+    </section>
+
+    <section class="newsletter-banner bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-4">Restez Informé des Offres Exclusives</h2>
+        <p class="text-lg mb-6">
+          Abonnez-vous à notre newsletter pour découvrir les dernières collections, promotions et offres exclusives.
+        </p>
+        <form @submit.prevent="handleSubscription" class="flex justify-center gap-4 max-w-lg mx-auto">
+          <input
+            type="email"
+            placeholder="Entrez votre email"
+            class="w-full px-4 py-2 text-black rounded-md focus:outline-none"
+            v-model="email"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-white text-brown font-semibold px-6 py-2 rounded-md hover:bg-gray-200 transition"
+          >
+            S'abonner
+          </button>
+        </form>
+        <p v-if="isSubscribed" class="mt-4 text-green-300">Merci de vous être abonné !</p>
       </div>
     </section>
   </main>
