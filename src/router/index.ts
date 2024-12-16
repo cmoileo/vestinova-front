@@ -11,6 +11,8 @@ import UserPublicProfile from '@/views/UserPublicProfile.vue';
 import LikedProducts from '@/views/LikedProducts.vue';
 import ModeHomme from '@/views/ModeHomme.vue';
 import ModeFemme from '@/views/ModeFemme.vue';
+// import Store from '@/views/Store.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,8 +52,18 @@ const router = createRouter({
           name: "liked-products",
           component: () => import("@/views/LikedProducts.vue"),
         },
-        { path: "/mode-homme", name: "modeHomme", component: ModeHomme },
-        { path: "/mode-femme", name: "modeFemme", component: ModeFemme },
+        { path: "/mode-homme",
+          name: "modeHomme",
+          component: ModeHomme 
+        },
+        { path: "/mode-femme",
+          name: "modeFemme",
+          component: ModeFemme 
+        },
+        // { path: "/store",
+        //   name: "store",
+        //   component: Store 
+        // },
       ]
     },
     {

@@ -106,20 +106,3 @@ const updateItems = (newItems) => {
 
 onMounted(fetchItems);
 </script>
-
-<style>
-.hero-section {
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  height: 80vh;
-}
-
-.newsletter-banner {
-  background-image: linear-gradient(to right, #615848, #998866);
-}
-
-.text-brown{
-  color: #615848;
-}
-</style>
