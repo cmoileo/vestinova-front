@@ -22,7 +22,6 @@
       <nav class="nav-links">
         <router-link to="/mode-femme">Mode Femme</router-link>
         <router-link to="/mode-homme">Mode Homme</router-link>
-        <router-link to="/">Enfant</router-link>
         <router-link to="/store">Store</router-link>
       </nav>
 
@@ -40,9 +39,8 @@
 
     <div v-if="isMenuOpen" class="burger-menu-content">
       <nav class="burger-nav-links">
-        <router-link to="/">Mode Femme</router-link>
-        <router-link to="/">Mode Homme</router-link>
-        <router-link to="/">Enfant</router-link>
+        <router-link to="/mode-femme">Mode Femme</router-link>
+        <router-link to="/mode-homme">Mode Homme</router-link>
         <router-link to="/store">Store</router-link>
       </nav>
       <div class="burger-actions-section">
