@@ -8,24 +8,27 @@
       </div>
     </section>
 
-    <div class="container mx-auto mt-8 flex justify-end">
+    <section class="container mx-auto px-4 py-6">
       <button
-        class="bg-accent text-black px-6 py-2 rounded-md hover:bg-accent-hover transition"
-        @click="toggleFilterModal"
+        @click="isFilterOpen = true"
+        class="sell-button text-white px-6 py-2 rounded-md transition"
       >
         Filtrer
       </button>
-    </div>
+    </section>
 
-    <search-bar v-if="isFilterModalOpen" @update:items="updateItems" @close="closeFilterModal" />
+    <SearchBar
+      :open-externally="isFilterOpen"
+      :hide-trigger="true"
+      @update:items="updateItems"
+      @close="isFilterOpen = false"
+    />
+
 
     <section class="container mx-auto py-12 px-4">
       <h2 class="text-3xl font-bold mb-6 text-center">Nos Produits</h2>
       <div v-if="loading" class="text-center">
         <p>Chargement des articles...</p>
-      </div>
-      <div v-else-if="error" class="text-red-600 text-center">
-        <p>{{ error }}</p>
       </div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div
@@ -36,25 +39,37 @@
           <img :src="item.imageUrl" :alt="item.name" class="w-full h-60 object-cover" />
           <div class="p-4">
             <h3 class="text-lg font-semibold truncate">{{ item.name }}</h3>
-            <p class="text-gray-500 text-sm">{{ item.category }}</p>
             <p class="text-primary font-bold mt-2">€ {{ item.price }}</p>
-            <button class="mt-4 w-full bg-accent text-white py-2 rounded-md hover:bg-accent-hover transition">
-              Voir le produit
-            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="promotion-banner bg-accent text-white text-center py-12">
-      <div class="container mx-auto">
-        <h2 class="text-4xl font-bold">Offre Spéciale</h2>
-        <p class="text-lg mt-2">Jusqu'à <span class="font-bold">50% de réduction</span> sur notre collection d'hiver !</p>
-        <button class="mt-6 px-8 py-3 bg-white text-accent font-semibold rounded-md hover:bg-gray-200 transition">
-          Découvrir les offres
-        </button>
+    <section class="newsletter-banner bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-4">Restez Informé des Offres Exclusives</h2>
+        <p class="text-lg mb-6">
+          Abonnez-vous à notre newsletter pour découvrir les dernières collections, promotions et offres exclusives.
+        </p>
+        <form @submit.prevent="handleSubscription" class="flex justify-center gap-4 max-w-lg mx-auto">
+          <input
+            type="email"
+            placeholder="Entrez votre email"
+            class="w-full px-4 py-2 text-black rounded-md focus:outline-none"
+            v-model="email"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-white text-brown font-semibold px-6 py-2 rounded-md hover:bg-gray-200 transition"
+          >
+            S'abonner
+          </button>
+        </form>
+        <p v-if="isSubscribed" class="mt-4 text-green-300">Merci de vous être abonné !</p>
       </div>
     </section>
+
   </div>
 </template>
 
@@ -64,35 +79,29 @@ import SearchBar from "@/components/modal/Search-bar.vue";
 import apiService from "@/service/api.service";
 import heroImage from "@/assets/images/man-category.jpg";
 
-const items = ref<any[]>([]);
-const loading = ref<boolean>(true);
-const error = ref<string | null>(null);
+const items = ref([]);
+const loading = ref(true);
+const isFilterOpen = ref(false);
+const email = ref("");
+const isSubscribed = ref(false);
 
-const isFilterModalOpen = ref(false);
-
-const toggleFilterModal = () => {
-  isFilterModalOpen.value = true;
-};
-
-const closeFilterModal = () => {
-  isFilterModalOpen.value = false;
+const handleSubscription = () => {
+  isSubscribed.value = true;
+  setTimeout(() => (isSubscribed.value = false), 5000);
+  email.value = "";
 };
 
 const fetchItems = async () => {
   loading.value = true;
-  error.value = null;
   try {
-    const results = await apiService.getItemsByCategory("homme");
-    items.value = results;
-  } catch (err) {
-    error.value = "Erreur lors de la récupération des articles.";
+    items.value = await apiService.getItemsByCategory("homme");
   } finally {
     loading.value = false;
   }
 };
 
-const updateItems = (filteredItems) => {
-  items.value = filteredItems;
+const updateItems = (newItems) => {
+  items.value = newItems;
 };
 
 onMounted(fetchItems);
@@ -106,7 +115,11 @@ onMounted(fetchItems);
   height: 80vh;
 }
 
-.promotion-banner {
-  background-image: linear-gradient(to right, #6a11cb, #2575fc);
+.newsletter-banner {
+  background-image: linear-gradient(to right, #615848, #998866);
+}
+
+.text-brown{
+  color: #615848;
 }
 </style>
