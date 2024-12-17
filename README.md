@@ -5,6 +5,6 @@
 - [x] Loading skeleton on items list
 - [x] User public page (back)
 - [x] Pagination for items => Léo
-- [ ] Improve items browsing => Majda
-- [ ] User public page (front) => Majda
-- [ ] Add cart => Léo
+- [x] Improve items browsing => Majda
+- [x] User public page (front) => Majda
+- [x] Add cart => Léo
